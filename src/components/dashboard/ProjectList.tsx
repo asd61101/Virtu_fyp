@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import { PlusCircle, Search, Filter, Grid, List as ListIcon } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import ProjectCard, { Project } from './ProjectCard';
 import { useToast } from "@/hooks/use-toast";
 
@@ -87,28 +84,7 @@ const ProjectList = ({ projects: externalProjects, viewType: externalViewType }:
         }))
       : sampleProjects
   );
-  const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>(externalViewType || 'grid');
   const { toast } = useToast();
-
-  const handleCreateNewProject = () => {
-    const newProject: Project = {
-      id: String(projects.length + 1),
-      name: 'New Project',
-      description: 'Start working on your new architectural design',
-      thumbnail: '',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      type: 'residential',
-    };
-    
-    setProjects([newProject, ...projects]);
-    
-    toast({
-      title: "Project created",
-      description: "Your new project has been created successfully",
-    });
-  };
 
   const handleDeleteProject = (id: string) => {
     setProjects(projects.filter(project => project.id !== id));
@@ -119,79 +95,20 @@ const ProjectList = ({ projects: externalProjects, viewType: externalViewType }:
     });
   };
 
-  const filteredProjects = projects.filter(project => 
-    project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    project.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const effectiveViewMode = externalViewType || viewMode;
+  const effectiveViewMode = externalViewType || 'grid';
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-          <Input
-            type="text"
-            placeholder="Search projects..."
-            className="pl-10"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <div className="bg-white border border-gray-200 rounded-md shadow-sm flex">
-            <button
-              className={`p-2 ${effectiveViewMode === 'grid' ? 'bg-gray-100 text-virtuspace-500' : 'text-gray-500'}`}
-              onClick={() => setViewMode('grid')}
-            >
-              <Grid className="h-5 w-5" />
-            </button>
-            <button
-              className={`p-2 ${effectiveViewMode === 'list' ? 'bg-gray-100 text-virtuspace-500' : 'text-gray-500'}`}
-              onClick={() => setViewMode('list')}
-            >
-              <ListIcon className="h-5 w-5" />
-            </button>
-          </div>
-          
-          <Button variant="outline" size="icon">
-            <Filter className="h-5 w-5" />
-          </Button>
-          
-          <Button className="bg-virtuspace-500 hover:bg-virtuspace-600" onClick={handleCreateNewProject}>
-            <PlusCircle className="h-5 w-5 mr-2" />
-            New Project
-          </Button>
-        </div>
-      </div>
-      
-      {filteredProjects.length === 0 ? (
-        <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-          <div className="mx-auto w-16 h-16 flex items-center justify-center rounded-full bg-gray-100 mb-4">
-            <Search className="h-8 w-8 text-gray-400" />
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-1">No projects found</h3>
-          <p className="text-gray-500 mb-4">We couldn't find any projects matching your search criteria.</p>
-          <Button variant="outline" onClick={() => setSearchQuery('')}>
-            Clear search
-          </Button>
-        </div>
-      ) : (
-        <div className={effectiveViewMode === 'grid' 
-          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          : "space-y-4"
-        }>
-          {filteredProjects.map((project) => (
-            <ProjectCard 
-              key={project.id} 
-              project={project} 
-              onDelete={handleDeleteProject} 
-            />
-          ))}
-        </div>
-      )}
+    <div className={effectiveViewMode === 'grid' 
+      ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in"
+      : "space-y-4 animate-fade-in"
+    }>
+      {projects.map((project) => (
+        <ProjectCard 
+          key={project.id} 
+          project={project} 
+          onDelete={handleDeleteProject} 
+        />
+      ))}
     </div>
   );
 };
