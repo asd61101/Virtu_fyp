@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Save, Undo, Redo, ZoomIn, ZoomOut, Maximize, Grid as GridIcon, Layers, Image, Cube, Text, ChevronDown } from 'lucide-react';
+import { Save, Undo, Redo, ZoomIn, ZoomOut, Maximize, Grid as GridIcon, Layers, Image, Box3D, Text, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -56,7 +56,7 @@ const Toolbar = () => {
             className={mode === '3d' ? "bg-white shadow-sm text-virtuspace-500" : "bg-transparent text-gray-500"} 
             onClick={() => setMode('3d')}
           >
-            <Cube className="h-4 w-4 mr-1" />
+            <Box3D className="h-4 w-4 mr-1" />
             3D
           </Button>
         </div>
@@ -77,7 +77,7 @@ const Toolbar = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
-              <Cube className="h-4 w-4 mr-2" />
+              <Box3D className="h-4 w-4 mr-2" />
               <span>3D Object</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
