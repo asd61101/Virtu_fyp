@@ -6,43 +6,42 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 const Toolbar = () => {
   const [mode, setMode] = useState<'2d' | '3d'>('2d');
-  
+  const [zoom, setZoom] = useState<number>(100);
+
+  const handleZoomIn = () => {
+    if (zoom < 200) {
+      setZoom(prev => prev + 10);
+    }
+  };
+
+  const handleZoomOut = () => {
+    if (zoom > 50) {
+      setZoom(prev => prev - 10);
+    }
+  };
+
   return (
-    <div className="bg-white border-b border-gray-200 py-2 px-4 flex items-center justify-between">
+    <div className="bg-gray-50 border-b border-gray-200 px-4 py-2 flex items-center justify-between">
+      {/* Left section - Undo, Redo, View modes */}
       <div className="flex items-center space-x-2">
-        <Button variant="ghost" size="icon" className="text-gray-500 hover:text-virtuspace-500">
-          <Save className="h-5 w-5" />
+        <Button variant="outline" size="icon">
+          <Undo className="h-4 w-4" />
         </Button>
-        <Button variant="ghost" size="icon" className="text-gray-500 hover:text-virtuspace-500">
-          <Undo className="h-5 w-5" />
-        </Button>
-        <Button variant="ghost" size="icon" className="text-gray-500 hover:text-virtuspace-500">
-          <Redo className="h-5 w-5" />
+        <Button variant="outline" size="icon">
+          <Redo className="h-4 w-4" />
         </Button>
         
-        <div className="h-6 border-l border-gray-200 mx-2"></div>
+        <div className="border-l border-gray-300 h-6 mx-2" />
         
-        <Button variant="ghost" size="icon" className="text-gray-500 hover:text-virtuspace-500">
-          <ZoomIn className="h-5 w-5" />
-        </Button>
-        <Button variant="ghost" size="icon" className="text-gray-500 hover:text-virtuspace-500">
-          <ZoomOut className="h-5 w-5" />
-        </Button>
-        <Button variant="ghost" size="icon" className="text-gray-500 hover:text-virtuspace-500">
-          <Maximize className="h-5 w-5" />
-        </Button>
-        
-        <div className="h-6 border-l border-gray-200 mx-2"></div>
-        
-        <div className="rounded-md bg-gray-100 p-1 flex items-center">
+        {/* 2D/3D Toggle */}
+        <div className="flex bg-gray-200 p-1 rounded-md">
           <Button 
-            variant={mode === '2d' ? "default" : "ghost"} 
+            variant="ghost" 
             size="sm" 
             className={mode === '2d' ? "bg-white shadow-sm text-virtuspace-500" : "bg-transparent text-gray-500"} 
             onClick={() => setMode('2d')}
@@ -51,7 +50,7 @@ const Toolbar = () => {
             2D
           </Button>
           <Button 
-            variant={mode === '3d' ? "default" : "ghost"} 
+            variant="ghost" 
             size="sm" 
             className={mode === '3d' ? "bg-white shadow-sm text-virtuspace-500" : "bg-transparent text-gray-500"} 
             onClick={() => setMode('3d')}
@@ -62,16 +61,15 @@ const Toolbar = () => {
         </div>
       </div>
       
-      <div className="flex items-center space-x-2">
-        <Button variant="outline" size="sm" className="text-gray-700 border-gray-300">
-          <Layers className="h-4 w-4 mr-2" />
-          Layers
-        </Button>
-        
+      {/* Center section - Add Elements */}
+      <div className="flex items-center">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="text-gray-700 border-gray-300">
-              Insert
+            <Button className="bg-virtuspace-500 hover:bg-virtuspace-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Add Element</span>
               <ChevronDown className="h-4 w-4 ml-2" />
             </Button>
           </DropdownMenuTrigger>
@@ -81,20 +79,36 @@ const Toolbar = () => {
               <span>3D Object</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Text className="h-4 w-4 mr-2" />
-              <span>Text</span>
+              <Layers className="h-4 w-4 mr-2" />
+              <span>Wall</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <GridIcon className="h-4 w-4 mr-2" />
+              <span>Floor</span>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <Image className="h-4 w-4 mr-2" />
-              <span>Image</span>
+              <span>Texture</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Text className="h-4 w-4 mr-2" />
+              <span>Text Label</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        
-        <Button className="bg-virtuspace-500 hover:bg-virtuspace-600">
-          <Save className="h-4 w-4 mr-2" />
-          Save Project
+      </div>
+      
+      {/* Right section - Zoom controls */}
+      <div className="flex items-center space-x-2">
+        <Button variant="outline" size="icon" onClick={handleZoomOut}>
+          <ZoomOut className="h-4 w-4" />
+        </Button>
+        <span className="text-sm font-medium text-gray-700">{zoom}%</span>
+        <Button variant="outline" size="icon" onClick={handleZoomIn}>
+          <ZoomIn className="h-4 w-4" />
+        </Button>
+        <Button variant="outline" size="icon">
+          <Maximize className="h-4 w-4" />
         </Button>
       </div>
     </div>
