@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -58,7 +57,7 @@ const Dashboard = () => {
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 hidden lg:block">
         <div className="h-16 flex items-center justify-center border-b border-gray-200">
-          {/* Empty space where the logo used to be */}
+          <h1 className="text-xl font-bold text-virtuspace-600">Virtuspace</h1>
         </div>
         
         <div className="p-4">
