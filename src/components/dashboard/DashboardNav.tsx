@@ -16,7 +16,7 @@ const DashboardNav = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              <h1 className="text-xl font-bold text-virtuspace-600">Virtuspace</h1>
+              {/* Removed Virtuspace heading from here */}
             </Link>
           </div>
 
