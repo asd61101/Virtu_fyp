@@ -16,7 +16,6 @@ const DashboardNav = () => {
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0">
-              {/* Using a heading element instead of direct string assignment */}
               <h1 className="text-xl font-bold text-virtuspace-600">Virtuspace</h1>
             </Link>
           </div>
