@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -75,7 +76,6 @@ const Dashboard = () => {
             className="bg-gray-50 border-gray-200"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            prefix={<Search size={16} className="text-gray-400" />}
           />
         </div>
         
