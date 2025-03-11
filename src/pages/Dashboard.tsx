@@ -12,7 +12,8 @@ import {
 import { 
   Plus, Search, Settings, Bell, LogOut, 
   User, ChevronDown, Grid, List as ListIcon,
-  Home, Folder, Layout, PanelLeft
+  Home, Folder, Layout, FileText, BarChart4,
+  Settings2, HelpCircle, Users
 } from "lucide-react";
 import ProjectList from "@/components/dashboard/ProjectList";
 
@@ -51,6 +52,7 @@ const mockProjects = [
 const Dashboard = () => {
   const [view, setView] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeSidebar, setActiveSidebar] = useState("dashboard");
 
   // Filter projects based on search query
   const filteredProjects = mockProjects.filter(project => 
@@ -59,211 +61,314 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <div className="hidden md:flex w-64 flex-col fixed inset-y-0 bg-white border-r border-gray-200 z-20">
-        <div className="p-6">
-          <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold text-virtuspace-700">Virtuspace</span>
-          </Link>
+    <div className="flex h-screen bg-gray-100">
+      {/* Modern sidebar with navigation */}
+      <div className="w-64 bg-white border-r border-gray-200 hidden lg:block">
+        <div className="h-16 flex items-center justify-center border-b border-gray-200">
+          <Link to="/" className="text-xl font-bold text-virtuspace-600">Virtuspace</Link>
         </div>
         
-        <nav className="flex-1 px-4 space-y-1 mt-5">
-          <div className="space-y-2">
-            <p className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              General
+        <div className="p-4">
+          <Button asChild className="w-full bg-virtuspace-600 hover:bg-virtuspace-700 shadow-sm">
+            <Link to="/editor/new" className="flex items-center justify-center">
+              <Plus size={16} className="mr-1" />
+              New Project
+            </Link>
+          </Button>
+        </div>
+        
+        <div className="px-3 py-2">
+          <Input 
+            placeholder="Search..." 
+            className="bg-gray-50 border-gray-200"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            prefix={<Search size={16} className="text-gray-400" />}
+          />
+        </div>
+        
+        <nav className="mt-4">
+          <div className="px-3 pb-2">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              Main
             </p>
-            <Link to="/dashboard" className="flex items-center px-3 py-2 text-sm font-medium rounded-md bg-virtuspace-50 text-virtuspace-700">
-              <Home className="mr-3 h-5 w-5 text-virtuspace-500" />
+          </div>
+          
+          <div>
+            <Link 
+              to="/dashboard" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "dashboard" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("dashboard")}
+            >
+              <Home className="mr-3 h-5 w-5" />
               Dashboard
             </Link>
-            <Link to="/projects" className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-virtuspace-600">
-              <Folder className="mr-3 h-5 w-5 text-gray-400" />
+            
+            <Link 
+              to="/projects" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "projects" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("projects")}
+            >
+              <Folder className="mr-3 h-5 w-5" />
               Projects
             </Link>
-            <Link to="/templates" className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-virtuspace-600">
-              <Layout className="mr-3 h-5 w-5 text-gray-400" />
+            
+            <Link 
+              to="/templates" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "templates" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("templates")}
+            >
+              <Layout className="mr-3 h-5 w-5" />
               Templates
+            </Link>
+            
+            <Link 
+              to="/documents" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "documents" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("documents")}
+            >
+              <FileText className="mr-3 h-5 w-5" />
+              Documents
+            </Link>
+            
+            <Link 
+              to="/analytics" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "analytics" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("analytics")}
+            >
+              <BarChart4 className="mr-3 h-5 w-5" />
+              Analytics
             </Link>
           </div>
           
-          <div className="mt-8 space-y-2">
-            <p className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <div className="mt-6">
+            <div className="px-3 pb-2">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Settings
+              </p>
+            </div>
+            
+            <Link 
+              to="/team" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "team" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("team")}
+            >
+              <Users className="mr-3 h-5 w-5" />
+              Team
+            </Link>
+            
+            <Link 
+              to="/settings" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "settings" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("settings")}
+            >
+              <Settings2 className="mr-3 h-5 w-5" />
               Settings
-            </p>
-            <Link to="/settings" className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-virtuspace-600">
-              <Settings className="mr-3 h-5 w-5 text-gray-400" />
-              Settings
+            </Link>
+            
+            <Link 
+              to="/help" 
+              className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
+                activeSidebar === "help" 
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={() => setActiveSidebar("help")}
+            >
+              <HelpCircle className="mr-3 h-5 w-5" />
+              Help & Support
             </Link>
           </div>
         </nav>
       </div>
       
-      {/* Main content */}
-      <div className="flex-1 md:ml-64">
-        {/* Header */}
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-          <div className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            {/* Mobile menu button */}
-            <button className="md:hidden text-gray-500 hover:text-virtuspace-600">
-              <PanelLeft size={20} />
-            </button>
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top navbar */}
+        <header className="bg-white border-b border-gray-200 flex items-center h-16 px-4">
+          <Link to="/" className="text-xl font-bold text-virtuspace-600 lg:hidden">
+            Virtuspace
+          </Link>
+          
+          <div className="flex-1"></div>
+          
+          <div className="flex items-center space-x-3">
+            <Button variant="ghost" size="icon" className="text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+              <Bell size={20} />
+            </Button>
             
-            {/* Search bar */}
-            <div className="flex-1 max-w-lg mx-auto md:mx-0 md:ml-6 relative">
-              <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <Input 
-                placeholder="Search projects..." 
-                className="pl-10 border-gray-300 focus:border-virtuspace-500 focus:ring-virtuspace-500"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            
-            {/* Right side controls */}
-            <div className="flex items-center space-x-4 ml-4">
-              <Button variant="ghost" size="icon" className="text-gray-500 hover:text-gray-700 hover:bg-gray-100">
-                <Bell size={20} />
-              </Button>
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
-                      <User size={18} className="text-virtuspace-600" />
-                    </div>
-                    <span className="hidden md:inline text-sm font-medium">John Doe</span>
-                    <ChevronDown size={16} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem className="cursor-pointer">
-                    <User size={16} className="mr-2" />
-                    <span>Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Settings size={16} className="mr-2" />
-                    <span>Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-red-600 cursor-pointer">
-                    <LogOut size={16} className="mr-2" />
-                    <span>Logout</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
+                    <User size={18} className="text-virtuspace-600" />
+                  </div>
+                  <span className="hidden md:inline text-sm font-medium">John Doe</span>
+                  <ChevronDown size={16} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem className="cursor-pointer">
+                  <User size={16} className="mr-2" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Settings size={16} className="mr-2" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-600 cursor-pointer">
+                  <LogOut size={16} className="mr-2" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
         
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Page header */}
-          <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Welcome back, John</h1>
-                <p className="text-gray-500 mt-1">Here's an overview of your architectural projects</p>
-              </div>
-              
-              <div className="mt-4 md:mt-0">
-                <Button asChild className="bg-virtuspace-500 hover:bg-virtuspace-600 shadow-sm">
-                  <Link to="/editor/new" className="flex items-center">
-                    <Plus size={20} className="mr-2" />
-                    New Project
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            
-            {/* Stats cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-              <div className="bg-gradient-to-r from-blue-50 to-virtuspace-50 p-4 rounded-lg border border-blue-100">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-blue-100 rounded-md p-3">
-                    <Folder className="h-6 w-6 text-virtuspace-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Active Projects</p>
-                    <p className="text-2xl font-semibold text-gray-900">7</p>
-                  </div>
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto py-6 px-4 sm:px-6 lg:px-8 bg-gray-50">
+          <div className="max-w-7xl mx-auto">
+            {/* Page header section */}
+            <div className="bg-white shadow rounded-lg mb-6">
+              <div className="px-6 py-5 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <h1 className="text-xl font-semibold text-gray-900">Welcome back, John</h1>
+                  <p className="mt-1 text-sm text-gray-500">Here's what's happening with your projects today</p>
                 </div>
-              </div>
-              
-              <div className="bg-gradient-to-r from-green-50 to-teal-50 p-4 rounded-lg border border-green-100">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-green-100 rounded-md p-3">
-                    <Layout className="h-6 w-6 text-green-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Completed</p>
-                    <p className="text-2xl font-semibold text-gray-900">12</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-lg border border-purple-100">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0 bg-purple-100 rounded-md p-3">
-                    <User className="h-6 w-6 text-purple-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-500">Team Members</p>
-                    <p className="text-2xl font-semibold text-gray-900">4</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Projects section */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900">Recent Projects</h2>
-              
-              <div className="flex space-x-2 mt-4 sm:mt-0">
-                <Button 
-                  variant={view === "grid" ? "secondary" : "outline"} 
-                  size="icon" 
-                  onClick={() => setView("grid")}
-                  className="h-9 w-9"
-                >
-                  <Grid size={18} />
-                </Button>
-                <Button 
-                  variant={view === "list" ? "secondary" : "outline"} 
-                  size="icon" 
-                  onClick={() => setView("list")}
-                  className="h-9 w-9"
-                >
-                  <ListIcon size={18} />
-                </Button>
-              </div>
-            </div>
-            
-            {/* Projects list */}
-            {filteredProjects.length > 0 ? (
-              <ProjectList projects={filteredProjects} viewType={view} />
-            ) : (
-              <div className="text-center py-16 bg-white rounded-lg border border-gray-200">
-                <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                  <Search size={24} className="text-gray-400" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900">No projects found</h3>
-                <p className="text-gray-500 mt-2">
-                  {searchQuery ? 
-                    `No results found for "${searchQuery}"` : 
-                    "Create your first project to get started"
-                  }
-                </p>
-                {!searchQuery && (
-                  <Button asChild className="mt-6 bg-virtuspace-500 hover:bg-virtuspace-600">
-                    <Link to="/editor/new">
-                      <Plus size={18} className="mr-1" />
-                      Create Project
+                <div className="mt-4 sm:mt-0">
+                  <Button asChild className="bg-virtuspace-600 hover:bg-virtuspace-700 shadow-sm">
+                    <Link to="/editor/new" className="flex items-center">
+                      <Plus size={16} className="mr-1" />
+                      New Project
                     </Link>
                   </Button>
+                </div>
+              </div>
+              
+              {/* Stats cards */}
+              <div className="border-t border-gray-200 px-6 py-5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 bg-virtuspace-100 rounded-md p-3">
+                        <Folder className="h-6 w-6 text-virtuspace-600" />
+                      </div>
+                      <div className="ml-4">
+                        <p className="text-sm font-medium text-gray-500">Active Projects</p>
+                        <p className="text-2xl font-semibold text-gray-900">7</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 bg-green-100 rounded-md p-3">
+                        <Layout className="h-6 w-6 text-green-600" />
+                      </div>
+                      <div className="ml-4">
+                        <p className="text-sm font-medium text-gray-500">Completed</p>
+                        <p className="text-2xl font-semibold text-gray-900">12</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 bg-purple-100 rounded-md p-3">
+                        <Users className="h-6 w-6 text-purple-600" />
+                      </div>
+                      <div className="ml-4">
+                        <p className="text-sm font-medium text-gray-500">Team Members</p>
+                        <p className="text-2xl font-semibold text-gray-900">4</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Recent projects section */}
+            <div className="bg-white shadow rounded-lg">
+              <div className="px-6 py-5 border-b border-gray-200 flex flex-wrap items-center justify-between">
+                <h2 className="text-lg font-medium text-gray-900">Recent Projects</h2>
+                
+                <div className="flex space-x-2 mt-3 sm:mt-0">
+                  <Button 
+                    variant={view === "grid" ? "default" : "outline"} 
+                    size="sm" 
+                    onClick={() => setView("grid")}
+                    className={view === "grid" ? "bg-virtuspace-600 hover:bg-virtuspace-700" : ""}
+                  >
+                    <Grid size={16} className="mr-1" />
+                    Grid
+                  </Button>
+                  <Button 
+                    variant={view === "list" ? "default" : "outline"} 
+                    size="sm" 
+                    onClick={() => setView("list")}
+                    className={view === "list" ? "bg-virtuspace-600 hover:bg-virtuspace-700" : ""}
+                  >
+                    <ListIcon size={16} className="mr-1" />
+                    List
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                {filteredProjects.length > 0 ? (
+                  <ProjectList projects={filteredProjects} viewType={view} />
+                ) : (
+                  <div className="text-center py-12">
+                    <div className="mx-auto w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <Search size={22} className="text-gray-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900">No projects found</h3>
+                    <p className="text-gray-500 mt-2">
+                      {searchQuery ? 
+                        `No results found for "${searchQuery}"` : 
+                        "Create your first project to get started"
+                      }
+                    </p>
+                    {!searchQuery && (
+                      <Button asChild className="mt-6 bg-virtuspace-600 hover:bg-virtuspace-700">
+                        <Link to="/editor/new">
+                          <Plus size={16} className="mr-1" />
+                          Create Project
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
                 )}
               </div>
-            )}
+            </div>
           </div>
         </main>
       </div>
