@@ -2,17 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import DashboardNav from "@/components/dashboard/DashboardNav";
 import { 
-  Plus, Search, Settings, Bell, LogOut, 
-  User, ChevronDown, Grid, List as ListIcon,
-  Home, Folder, Layout, FileText, BarChart4,
-  Settings2, HelpCircle, Users
+  Plus, Search, Home, Folder, Layout, FileText, BarChart4,
+  Settings2, HelpCircle, Users, Grid, ListIcon
 } from "lucide-react";
 import ProjectList from "@/components/dashboard/ProjectList";
 
@@ -61,10 +54,10 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Modern sidebar with navigation */}
+      {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 hidden lg:block">
         <div className="h-16 flex items-center justify-center border-b border-gray-200">
-          <span className="text-xl font-bold text-virtuspace-600">Virtuspace</span>
+          <h1 className="text-xl font-bold text-virtuspace-600">Virtuspace</h1>
         </div>
         
         <div className="p-4">
@@ -211,46 +204,7 @@ const Dashboard = () => {
       
       {/* Main content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Top navbar */}
-        <header className="bg-white border-b border-gray-200 flex items-center h-16 px-4">
-          <span className="text-xl font-bold text-virtuspace-600 lg:hidden">
-            Virtuspace
-          </span>
-          
-          <div className="flex-1"></div>
-          
-          <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon" className="text-gray-500 hover:text-gray-700 hover:bg-gray-100">
-              <Bell size={20} />
-            </Button>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
-                    <User size={18} className="text-virtuspace-600" />
-                  </div>
-                  <span className="hidden md:inline text-sm font-medium">John Doe</span>
-                  <ChevronDown size={16} />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem className="cursor-pointer">
-                  <User size={16} className="mr-2" />
-                  <span>Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <Settings size={16} className="mr-2" />
-                  <span>Settings</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-600 cursor-pointer">
-                  <LogOut size={16} className="mr-2" />
-                  <span>Logout</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </header>
+        <DashboardNav />
         
         {/* Page content */}
         <main className="flex-1 overflow-y-auto py-6 px-4 sm:px-6 lg:px-8 bg-gray-50">
