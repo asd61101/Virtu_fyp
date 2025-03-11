@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -65,7 +64,7 @@ const Dashboard = () => {
       {/* Modern sidebar with navigation */}
       <div className="w-64 bg-white border-r border-gray-200 hidden lg:block">
         <div className="h-16 flex items-center justify-center border-b border-gray-200">
-          <Link to="/" className="text-xl font-bold text-virtuspace-600">Virtuspace</Link>
+          <span className="text-xl font-bold text-virtuspace-600">Virtuspace</span>
         </div>
         
         <div className="p-4">
@@ -214,9 +213,9 @@ const Dashboard = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top navbar */}
         <header className="bg-white border-b border-gray-200 flex items-center h-16 px-4">
-          <Link to="/" className="text-xl font-bold text-virtuspace-600 lg:hidden">
+          <span className="text-xl font-bold text-virtuspace-600 lg:hidden">
             Virtuspace
-          </Link>
+          </span>
           
           <div className="flex-1"></div>
           
