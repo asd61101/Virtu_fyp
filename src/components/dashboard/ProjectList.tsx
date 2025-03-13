@@ -93,6 +93,7 @@ const ProjectList = ({ projects: externalProjects, viewType: externalViewType }:
     toast({
       title: "Project deleted",
       description: "Your project has been deleted successfully",
+      variant: "default",
     });
   };
 
@@ -100,7 +101,7 @@ const ProjectList = ({ projects: externalProjects, viewType: externalViewType }:
 
   return (
     <div className={effectiveViewMode === 'grid' 
-      ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in"
+      ? "animate-fade-in"
       : "space-y-4 animate-fade-in"
     }>
       {projects.map((project) => (
