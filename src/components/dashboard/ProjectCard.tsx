@@ -62,7 +62,7 @@ const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative">
-        <Link to={`/project/${project.id}`} className="block aspect-video overflow-hidden bg-gray-50">
+        <Link to={`/project/${project.id}`} className="block overflow-hidden bg-gray-50" style={{ height: "160px" }}>
           {project.thumbnail ? (
             <img 
               src={project.thumbnail} 
@@ -75,7 +75,7 @@ const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gray-50">
-              <Folder className="h-16 w-16 text-gray-300" />
+              <Folder className="h-12 w-12 text-gray-300" />
             </div>
           )}
         </Link>
@@ -111,22 +111,22 @@ const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
       <CardContent className="flex-1 flex flex-col p-4">
         <div className="flex items-start justify-between mb-2">
           <div>
-            <h3 className="font-medium text-lg text-gray-900 mb-1 line-clamp-1">{project.name}</h3>
+            <h3 className="font-medium text-base text-gray-900 mb-1 line-clamp-1">{project.name}</h3>
           </div>
           <span className={`text-xs px-2 py-1 rounded-full ${getTypeColor(project.type)}`}>
             {project.type.charAt(0).toUpperCase() + project.type.slice(1)}
           </span>
         </div>
         
-        <p className="text-gray-600 text-sm line-clamp-2 mb-3">{project.description}</p>
+        <p className="text-gray-600 text-xs line-clamp-2 mb-2">{project.description}</p>
         
-        <div className="mt-auto pt-3 border-t border-gray-200 flex items-center justify-between">
+        <div className="mt-auto pt-2 border-t border-gray-200 flex items-center justify-between">
           <div className="text-xs text-gray-500">
-            Updated {formatDate(project.updatedAt)}
+            {formatDate(project.updatedAt)}
           </div>
-          <Button asChild variant="ghost" size="sm" className="text-virtuspace-600 hover:text-virtuspace-700 hover:bg-virtuspace-50">
+          <Button asChild variant="ghost" size="sm" className="h-7 px-2 text-xs text-virtuspace-600 hover:text-virtuspace-700 hover:bg-virtuspace-50">
             <Link to={`/project/${project.id}`}>
-              Open Project
+              Open
             </Link>
           </Button>
         </div>

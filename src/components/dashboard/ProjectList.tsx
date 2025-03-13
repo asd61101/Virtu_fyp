@@ -101,7 +101,7 @@ const ProjectList = ({ projects: externalProjects, viewType: externalViewType }:
 
   return (
     <div className={effectiveViewMode === 'grid' 
-      ? "animate-fade-in"
+      ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 animate-fade-in"
       : "space-y-4 animate-fade-in"
     }>
       {projects.map((project) => (

@@ -210,66 +210,66 @@ const Dashboard = () => {
         <main className="flex-1 overflow-y-auto py-6 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             {/* Welcome section */}
-            <div className="mb-10">
+            <div className="mb-8">
               <h1 className="text-3xl font-semibold text-gray-900 mb-2">Welcome, John</h1>
               <p className="text-gray-600">Where do you want to start?</p>
             </div>
             
             {/* Feature cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
-              <Link to="/ai-floorplanning" className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <Link to="/ai-floorplanning" className="bg-white rounded-lg border border-gray-200 p-4 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-3">
                     <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
                       <Plus className="h-5 w-5 text-virtuspace-600" />
                     </div>
-                    <h3 className="ml-3 text-lg font-medium text-gray-900">AI Floorplanning</h3>
+                    <h3 className="ml-3 text-base font-medium text-gray-900">AI Floorplanning</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">Generate a plan from defined constraints</p>
+                  <p className="text-xs text-gray-600">Generate a plan from defined constraints</p>
                 </div>
               </Link>
               
-              <div className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
+              <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-3">
                     <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
                       <Edit3 className="h-5 w-5 text-virtuspace-600" />
                     </div>
-                    <h3 className="ml-3 text-lg font-medium text-gray-900">Edit plan</h3>
+                    <h3 className="ml-3 text-base font-medium text-gray-900">Edit plan</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">Upload and edit an existing plan</p>
+                  <p className="text-xs text-gray-600">Upload and edit an existing plan</p>
                 </div>
               </div>
               
-              <div className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
+              <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-3">
                     <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
                       <Layout className="h-5 w-5 text-virtuspace-600" />
                     </div>
-                    <h3 className="ml-3 text-lg font-medium text-gray-900">Render</h3>
+                    <h3 className="ml-3 text-base font-medium text-gray-900">Render</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">Upload a sketch or an image and turn it into a rendering</p>
+                  <p className="text-xs text-gray-600">Upload a sketch or an image and turn it into a rendering</p>
                 </div>
               </div>
               
-              <Link to="/360-walkthrough" className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
+              <Link to="/360-walkthrough" className="bg-white rounded-lg border border-gray-200 p-4 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-3">
                     <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
                       <ImageIcon className="h-5 w-5 text-virtuspace-600" />
                     </div>
-                    <h3 className="ml-3 text-lg font-medium text-gray-900">360° Walkthrough</h3>
+                    <h3 className="ml-3 text-base font-medium text-gray-900">360° Walkthrough</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">Explore interior/exterior design styles</p>
+                  <p className="text-xs text-gray-600">Explore interior/exterior design styles</p>
                 </div>
               </Link>
             </div>
             
             {/* Projects section */}
             <div className="mb-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-semibold text-gray-900">Projects</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-900">Projects</h2>
                 
                 <div className="flex space-x-2">
                   <Button 
@@ -293,29 +293,31 @@ const Dashboard = () => {
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-white border border-gray-200 rounded-lg aspect-square flex items-center justify-center hover:border-virtuspace-300 hover:shadow-md transition-all cursor-pointer group">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="bg-white border border-gray-200 rounded-lg h-[258px] flex items-center justify-center hover:border-virtuspace-300 hover:shadow-md transition-all cursor-pointer group">
                   <div className="text-gray-500 group-hover:text-virtuspace-500 transition-colors">
-                    <Plus size={30} />
+                    <Plus size={24} />
                     <p className="mt-2 text-sm font-medium">New Project</p>
                   </div>
                 </div>
                 {filteredProjects.length > 0 ? (
-                  <ProjectList projects={filteredProjects} viewType={view} />
+                  <div className="col-span-1 sm:col-span-3 lg:col-span-3">
+                    <ProjectList projects={filteredProjects} viewType={view} />
+                  </div>
                 ) : (
-                  <div className="text-center py-12 col-span-2">
-                    <div className="mx-auto w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                      <Search size={22} className="text-gray-500" />
+                  <div className="text-center py-10 col-span-3">
+                    <div className="mx-auto w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-3">
+                      <Search size={20} className="text-gray-500" />
                     </div>
                     <h3 className="text-lg font-medium text-gray-900">No projects found</h3>
-                    <p className="text-gray-600 mt-2">
+                    <p className="text-gray-600 mt-1 text-sm">
                       {searchQuery ? 
                         `No results found for "${searchQuery}"` : 
                         "Create your first project to get started"
                       }
                     </p>
                     {!searchQuery && (
-                      <Button asChild className="mt-6 bg-virtuspace-500 hover:bg-virtuspace-600">
+                      <Button asChild className="mt-4 bg-virtuspace-500 hover:bg-virtuspace-600">
                         <Link to="/editor/new">
                           <Plus size={16} className="mr-1" />
                           Create Project
