@@ -9,6 +9,8 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ProjectEditor from "./pages/ProjectEditor";
+import AIFloorplanning from "./pages/AIFloorplanning";
+import Walkthrough360 from "./pages/Walkthrough360";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,8 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/editor/:projectId" element={<ProjectEditor />} />
+          <Route path="/ai-floorplanning" element={<AIFloorplanning />} />
+          <Route path="/360-walkthrough" element={<Walkthrough360 />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

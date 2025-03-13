@@ -31,10 +31,10 @@ const Navigation = () => {
 
   const navItems = [
     { name: 'Features', path: '/#features', dropdown: [
-      { name: 'AI Design Tools', path: '/#ai-design' },
+      { name: 'AI Floorplanning', path: '/ai-floorplanning' },
       { name: 'Interactive 3D', path: '/#interactive-3d' },
       { name: 'Mood Boards', path: '/#mood-boards' },
-      { name: '360° Walkthrough', path: '/#walkthrough' },
+      { name: '360° Walkthrough', path: '/360-walkthrough' },
     ]},
     { name: 'Gallery', path: '/#gallery' },
     { name: 'Pricing', path: '/#pricing' },
