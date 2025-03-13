@@ -43,26 +43,26 @@ const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'residential':
-        return 'bg-blue-900/30 text-blue-400';
+        return 'bg-blue-50 text-blue-600';
       case 'commercial':
-        return 'bg-green-900/30 text-green-400';
+        return 'bg-green-50 text-green-600';
       case 'interior':
-        return 'bg-purple-900/30 text-purple-400';
+        return 'bg-purple-50 text-purple-600';
       case 'landscape':
-        return 'bg-yellow-900/30 text-yellow-400';
+        return 'bg-yellow-50 text-yellow-600';
       default:
-        return 'bg-gray-900/30 text-gray-400';
+        return 'bg-gray-50 text-gray-600';
     }
   };
 
   return (
     <Card 
-      className="overflow-hidden transition-all duration-300 hover:shadow-md border border-gray-800 h-full flex flex-col bg-[#1A1A1A]"
+      className="overflow-hidden transition-all duration-300 hover:shadow-md border border-gray-200 h-full flex flex-col bg-white"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative">
-        <Link to={`/project/${project.id}`} className="block aspect-video overflow-hidden bg-gray-900">
+        <Link to={`/project/${project.id}`} className="block aspect-video overflow-hidden bg-gray-50">
           {project.thumbnail ? (
             <img 
               src={project.thumbnail} 
@@ -74,8 +74,8 @@ const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
               }}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-900">
-              <Folder className="h-16 w-16 text-gray-700" />
+            <div className="w-full h-full flex items-center justify-center bg-gray-50">
+              <Folder className="h-16 w-16 text-gray-300" />
             </div>
           )}
         </Link>
@@ -83,24 +83,24 @@ const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
         <div className="absolute top-3 right-3">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8 bg-[#252525]/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-[#333333]">
-                <MoreHorizontal className="h-4 w-4 text-gray-300" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-gray-50">
+                <MoreHorizontal className="h-4 w-4 text-gray-700" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40 bg-[#1A1A1A] border border-gray-800">
-              <DropdownMenuLabel className="text-gray-300">Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator className="bg-gray-800" />
-              <DropdownMenuItem className="hover:bg-[#252525] text-gray-300 focus:bg-[#252525] focus:text-white">
+            <DropdownMenuContent align="end" className="w-40 bg-white border border-gray-200">
+              <DropdownMenuLabel className="text-gray-700">Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-gray-200" />
+              <DropdownMenuItem className="hover:bg-gray-50 text-gray-700 focus:bg-gray-50 focus:text-gray-900">
                 <Link to={`/project/${project.id}`} className="flex items-center w-full">
                   <Edit2 className="mr-2 h-4 w-4" /> Edit
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="hover:bg-[#252525] text-gray-300 focus:bg-[#252525] focus:text-white">
+              <DropdownMenuItem className="hover:bg-gray-50 text-gray-700 focus:bg-gray-50 focus:text-gray-900">
                 <Share2 className="mr-2 h-4 w-4" /> Share
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-gray-800" />
-              <DropdownMenuItem className="text-red-400 hover:bg-[#252525] focus:bg-[#252525] focus:text-red-300" onSelect={() => onDelete(project.id)}>
+              <DropdownMenuSeparator className="bg-gray-200" />
+              <DropdownMenuItem className="text-red-600 hover:bg-gray-50 focus:bg-gray-50 focus:text-red-700" onSelect={() => onDelete(project.id)}>
                 <Trash2 className="mr-2 h-4 w-4" /> Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -111,20 +111,20 @@ const ProjectCard = ({ project, onDelete }: ProjectCardProps) => {
       <CardContent className="flex-1 flex flex-col p-4">
         <div className="flex items-start justify-between mb-2">
           <div>
-            <h3 className="font-medium text-lg text-white mb-1 line-clamp-1">{project.name}</h3>
+            <h3 className="font-medium text-lg text-gray-900 mb-1 line-clamp-1">{project.name}</h3>
           </div>
           <span className={`text-xs px-2 py-1 rounded-full ${getTypeColor(project.type)}`}>
             {project.type.charAt(0).toUpperCase() + project.type.slice(1)}
           </span>
         </div>
         
-        <p className="text-gray-400 text-sm line-clamp-2 mb-3">{project.description}</p>
+        <p className="text-gray-600 text-sm line-clamp-2 mb-3">{project.description}</p>
         
-        <div className="mt-auto pt-3 border-t border-gray-800 flex items-center justify-between">
+        <div className="mt-auto pt-3 border-t border-gray-200 flex items-center justify-between">
           <div className="text-xs text-gray-500">
             Updated {formatDate(project.updatedAt)}
           </div>
-          <Button asChild variant="ghost" size="sm" className="text-virtuspace-400 hover:text-virtuspace-300 hover:bg-virtuspace-900/20">
+          <Button asChild variant="ghost" size="sm" className="text-virtuspace-600 hover:text-virtuspace-700 hover:bg-virtuspace-50">
             <Link to={`/project/${project.id}`}>
               Open Project
             </Link>

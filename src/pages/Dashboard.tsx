@@ -54,15 +54,15 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="flex h-screen bg-[#121212]">
+    <div className="flex h-screen bg-[#f8fafc]">
       {/* Sidebar */}
-      <div className="w-64 bg-[#1A1A1A] border-r border-gray-800 hidden lg:block">
-        <div className="h-16 flex items-center justify-center border-b border-gray-800">
-          <h1 className="text-xl font-bold text-virtuspace-400">Virtuspace</h1>
+      <div className="w-64 bg-white border-r border-gray-200 hidden lg:block">
+        <div className="h-16 flex items-center justify-center border-b border-gray-200">
+          <h1 className="text-xl font-bold text-virtuspace-500">Virtuspace</h1>
         </div>
         
         <div className="p-4">
-          <Button asChild className="w-full bg-virtuspace-600 hover:bg-virtuspace-700 shadow-sm">
+          <Button asChild className="w-full bg-virtuspace-500 hover:bg-virtuspace-600 shadow-sm">
             <Link to="/editor/new" className="flex items-center justify-center">
               <Plus size={16} className="mr-1" />
               New Project
@@ -73,7 +73,7 @@ const Dashboard = () => {
         <div className="px-3 py-2">
           <Input 
             placeholder="Search..." 
-            className="bg-[#252525] border-gray-700 text-gray-300 placeholder:text-gray-500"
+            className="bg-gray-50 border-gray-200 text-gray-700 placeholder:text-gray-400"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -81,7 +81,7 @@ const Dashboard = () => {
         
         <nav className="mt-4">
           <div className="px-3 pb-2">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
               Main
             </p>
           </div>
@@ -91,8 +91,8 @@ const Dashboard = () => {
               to="/dashboard" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "dashboard" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("dashboard")}
             >
@@ -104,8 +104,8 @@ const Dashboard = () => {
               to="/projects" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "projects" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("projects")}
             >
@@ -117,8 +117,8 @@ const Dashboard = () => {
               to="/templates" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "templates" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("templates")}
             >
@@ -130,8 +130,8 @@ const Dashboard = () => {
               to="/documents" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "documents" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("documents")}
             >
@@ -143,8 +143,8 @@ const Dashboard = () => {
               to="/analytics" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "analytics" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("analytics")}
             >
@@ -155,7 +155,7 @@ const Dashboard = () => {
           
           <div className="mt-6">
             <div className="px-3 pb-2">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Settings
               </p>
             </div>
@@ -164,8 +164,8 @@ const Dashboard = () => {
               to="/team" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "team" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("team")}
             >
@@ -177,8 +177,8 @@ const Dashboard = () => {
               to="/settings" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "settings" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("settings")}
             >
@@ -190,8 +190,8 @@ const Dashboard = () => {
               to="/help" 
               className={`flex items-center px-3 py-2 text-sm font-medium rounded-md mx-2 ${
                 activeSidebar === "help" 
-                  ? "bg-[#252525] text-virtuspace-400" 
-                  : "text-gray-400 hover:bg-[#252525] hover:text-gray-300"
+                  ? "bg-virtuspace-50 text-virtuspace-600" 
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
               onClick={() => setActiveSidebar("help")}
             >
@@ -207,76 +207,76 @@ const Dashboard = () => {
         <DashboardNav />
         
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto py-6 px-4 sm:px-6 lg:px-8 bg-[#121212]">
+        <main className="flex-1 overflow-y-auto py-6 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-7xl mx-auto">
             {/* Welcome section */}
             <div className="mb-10">
-              <h1 className="text-3xl font-semibold text-white mb-2">Welcome, John</h1>
-              <p className="text-gray-400">Where do you want to start?</p>
+              <h1 className="text-3xl font-semibold text-gray-900 mb-2">Welcome, John</h1>
+              <p className="text-gray-600">Where do you want to start?</p>
             </div>
             
             {/* Feature cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
-              <div className="bg-[#1A1A1A] rounded-lg border border-gray-800 p-6 hover:border-gray-700 transition-all">
+              <Link to="/ai-floorplanning" className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 rounded-full bg-virtuspace-600/20 flex items-center justify-center">
-                      <Plus className="h-5 w-5 text-virtuspace-400" />
+                    <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
+                      <Plus className="h-5 w-5 text-virtuspace-600" />
                     </div>
-                    <h3 className="ml-3 text-lg font-medium text-white">Generate plan</h3>
+                    <h3 className="ml-3 text-lg font-medium text-gray-900">AI Floorplanning</h3>
                   </div>
-                  <p className="text-sm text-gray-400 mt-2">Generate a plan from defined constraints</p>
+                  <p className="text-sm text-gray-600 mt-2">Generate a plan from defined constraints</p>
+                </div>
+              </Link>
+              
+              <div className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center mb-4">
+                    <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
+                      <Edit3 className="h-5 w-5 text-virtuspace-600" />
+                    </div>
+                    <h3 className="ml-3 text-lg font-medium text-gray-900">Edit plan</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">Upload and edit an existing plan</p>
                 </div>
               </div>
               
-              <div className="bg-[#1A1A1A] rounded-lg border border-gray-800 p-6 hover:border-gray-700 transition-all">
+              <div className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 rounded-full bg-virtuspace-600/20 flex items-center justify-center">
-                      <Edit3 className="h-5 w-5 text-virtuspace-400" />
+                    <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
+                      <Layout className="h-5 w-5 text-virtuspace-600" />
                     </div>
-                    <h3 className="ml-3 text-lg font-medium text-white">Edit plan</h3>
+                    <h3 className="ml-3 text-lg font-medium text-gray-900">Render</h3>
                   </div>
-                  <p className="text-sm text-gray-400 mt-2">Upload and edit an existing plan</p>
+                  <p className="text-sm text-gray-600 mt-2">Upload a sketch or an image and turn it into a rendering</p>
                 </div>
               </div>
               
-              <div className="bg-[#1A1A1A] rounded-lg border border-gray-800 p-6 hover:border-gray-700 transition-all">
+              <Link to="/360-walkthrough" className="bg-white rounded-lg border border-gray-200 p-6 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 rounded-full bg-virtuspace-600/20 flex items-center justify-center">
-                      <Layout className="h-5 w-5 text-virtuspace-400" />
+                    <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
+                      <ImageIcon className="h-5 w-5 text-virtuspace-600" />
                     </div>
-                    <h3 className="ml-3 text-lg font-medium text-white">Render</h3>
+                    <h3 className="ml-3 text-lg font-medium text-gray-900">360° Walkthrough</h3>
                   </div>
-                  <p className="text-sm text-gray-400 mt-2">Upload a sketch or an image and turn it into a rendering</p>
+                  <p className="text-sm text-gray-600 mt-2">Explore interior/exterior design styles</p>
                 </div>
-              </div>
-              
-              <div className="bg-[#1A1A1A] rounded-lg border border-gray-800 p-6 hover:border-gray-700 transition-all">
-                <div className="flex flex-col h-full">
-                  <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 rounded-full bg-virtuspace-600/20 flex items-center justify-center">
-                      <ImageIcon className="h-5 w-5 text-virtuspace-400" />
-                    </div>
-                    <h3 className="ml-3 text-lg font-medium text-white">Generate image</h3>
-                  </div>
-                  <p className="text-sm text-gray-400 mt-2">Explore interior/exterior design styles</p>
-                </div>
-              </div>
+              </Link>
             </div>
             
             {/* Projects section */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-semibold text-white">Projects</h2>
+                <h2 className="text-2xl font-semibold text-gray-900">Projects</h2>
                 
                 <div className="flex space-x-2">
                   <Button 
                     variant={view === "grid" ? "default" : "outline"} 
                     size="sm" 
                     onClick={() => setView("grid")}
-                    className={view === "grid" ? "bg-virtuspace-600 hover:bg-virtuspace-700" : "border-gray-700 text-gray-300"}
+                    className={view === "grid" ? "bg-virtuspace-500 hover:bg-virtuspace-600" : "border-gray-300 text-gray-700"}
                   >
                     <Grid size={16} className="mr-1" />
                     Grid
@@ -285,7 +285,7 @@ const Dashboard = () => {
                     variant={view === "list" ? "default" : "outline"} 
                     size="sm" 
                     onClick={() => setView("list")}
-                    className={view === "list" ? "bg-virtuspace-600 hover:bg-virtuspace-700" : "border-gray-700 text-gray-300"}
+                    className={view === "list" ? "bg-virtuspace-500 hover:bg-virtuspace-600" : "border-gray-300 text-gray-700"}
                   >
                     <ListIcon size={16} className="mr-1" />
                     List
@@ -294,8 +294,8 @@ const Dashboard = () => {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-[#1A1A1A] border border-gray-800 rounded-lg aspect-square flex items-center justify-center hover:border-gray-700 transition-all cursor-pointer group">
-                  <div className="text-gray-500 group-hover:text-virtuspace-400 transition-colors">
+                <div className="bg-white border border-gray-200 rounded-lg aspect-square flex items-center justify-center hover:border-virtuspace-300 hover:shadow-md transition-all cursor-pointer group">
+                  <div className="text-gray-500 group-hover:text-virtuspace-500 transition-colors">
                     <Plus size={30} />
                     <p className="mt-2 text-sm font-medium">New Project</p>
                   </div>
@@ -304,18 +304,18 @@ const Dashboard = () => {
                   <ProjectList projects={filteredProjects} viewType={view} />
                 ) : (
                   <div className="text-center py-12 col-span-2">
-                    <div className="mx-auto w-14 h-14 bg-[#252525] rounded-full flex items-center justify-center mb-4">
-                      <Search size={22} className="text-gray-400" />
+                    <div className="mx-auto w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <Search size={22} className="text-gray-500" />
                     </div>
-                    <h3 className="text-lg font-medium text-white">No projects found</h3>
-                    <p className="text-gray-400 mt-2">
+                    <h3 className="text-lg font-medium text-gray-900">No projects found</h3>
+                    <p className="text-gray-600 mt-2">
                       {searchQuery ? 
                         `No results found for "${searchQuery}"` : 
                         "Create your first project to get started"
                       }
                     </p>
                     {!searchQuery && (
-                      <Button asChild className="mt-6 bg-virtuspace-600 hover:bg-virtuspace-700">
+                      <Button asChild className="mt-6 bg-virtuspace-500 hover:bg-virtuspace-600">
                         <Link to="/editor/new">
                           <Plus size={16} className="mr-1" />
                           Create Project
