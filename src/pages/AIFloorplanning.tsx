@@ -32,7 +32,7 @@ const AIFloorplanning = () => {
             </div>
             <div className="rounded-xl overflow-hidden shadow-lg border border-gray-100">
               <img 
-                src="https://images.unsplash.com/photo-1545043059-951e55a0f730?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                src="https://images.unsplash.com/photo-1545043059-951e55a0f730?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                 alt="AI Floor Planning Visualization" 
                 className="w-full h-auto object-cover"
               />

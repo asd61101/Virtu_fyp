@@ -11,6 +11,8 @@ import Dashboard from "./pages/Dashboard";
 import ProjectEditor from "./pages/ProjectEditor";
 import AIFloorplanning from "./pages/AIFloorplanning";
 import Walkthrough360 from "./pages/Walkthrough360";
+import Gallery from "./pages/Gallery";
+import Pricing from "./pages/Pricing";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/editor/:projectId" element={<ProjectEditor />} />
           <Route path="/ai-floorplanning" element={<AIFloorplanning />} />
           <Route path="/360-walkthrough" element={<Walkthrough360 />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/pricing" element={<Pricing />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -59,11 +59,18 @@ const Walkthrough360 = () => {
             </div>
             
             <div className="max-w-5xl mx-auto bg-gray-900 rounded-xl overflow-hidden shadow-xl aspect-video relative">
-              <div className="absolute inset-0 flex items-center justify-center text-white">
+              <iframe 
+                src="https://my.matterport.com/show/?m=aSx1MpRRqif" 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              ></iframe>
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center text-white bg-black bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity">
                 <div className="text-center">
-                  <Compass className="h-16 w-16 mx-auto mb-4 text-virtuspace-400" />
-                  <p className="text-xl">Interactive 360° Demo</p>
-                  <p className="text-sm text-gray-400 mt-2">Click and drag to look around</p>
+                  <p className="text-xl">Click and drag to look around</p>
+                  <p className="text-sm text-gray-400 mt-2">Use WASD keys to move</p>
                 </div>
               </div>
             </div>

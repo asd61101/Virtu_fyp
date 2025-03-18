@@ -6,32 +6,38 @@ const Features = () => {
     {
       icon: <Layout className="h-8 w-8 text-virtuspace-500" />,
       title: "Intuitive Floor Plans",
-      description: "Create precise 2D floor plans with our easy-to-use drag-and-drop editor. No technical knowledge required."
+      description: "Create precise 2D floor plans with our easy-to-use drag-and-drop editor. No technical knowledge required.",
+      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       icon: <Layers className="h-8 w-8 text-virtuspace-500" />,
       title: "3D Visualization",
-      description: "Transform your floor plans into photorealistic 3D models with a single click. Preview your design from any angle."
+      description: "Transform your floor plans into photorealistic 3D models with a single click. Preview your design from any angle.",
+      image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       icon: <Zap className="h-8 w-8 text-virtuspace-500" />,
       title: "AI Design Assistant",
-      description: "Our AI analyzes your space and suggests optimal furniture arrangements and design improvements."
+      description: "Our AI analyzes your space and suggests optimal furniture arrangements and design improvements.",
+      image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       icon: <PanelLeft className="h-8 w-8 text-virtuspace-500" />,
       title: "Mood Boards",
-      description: "Collect and organize design inspiration with customizable mood boards to visualize your aesthetic."
+      description: "Collect and organize design inspiration with customizable mood boards to visualize your aesthetic.",
+      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       icon: <Compass className="h-8 w-8 text-virtuspace-500" />,
       title: "360° Walkthrough",
-      description: "Experience your design in an immersive 360° virtual walkthrough. Share with clients and stakeholders."
+      description: "Experience your design in an immersive 360° virtual walkthrough. Share with clients and stakeholders.",
+      image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {
       icon: <MessageSquare className="h-8 w-8 text-virtuspace-500" />,
       title: "Collaboration Tools",
-      description: "Work together with team members and clients in real-time with comments, notes, and shared access."
+      description: "Work together with team members and clients in real-time with comments, notes, and shared access.",
+      image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
   ];
 
@@ -49,10 +55,17 @@ const Features = () => {
           {features.map((feature, index) => (
             <div 
               key={index} 
-              className="feature-card relative p-8 rounded-2xl border border-gray-200 bg-white hover:border-virtuspace-200 transition-all duration-300 animate-scale-in"
+              className="feature-card relative p-8 rounded-2xl border border-gray-200 bg-white hover:border-virtuspace-200 transition-all duration-300 animate-scale-in overflow-hidden"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="rounded-full bg-virtuspace-50 w-16 h-16 flex items-center justify-center mb-6">
+              <div className="mb-4 h-48 rounded-lg overflow-hidden">
+                <img 
+                  src={feature.image} 
+                  alt={feature.title} 
+                  className="w-full h-full object-cover transition-transform hover:scale-105"
+                />
+              </div>
+              <div className="rounded-full bg-virtuspace-50 w-16 h-16 flex items-center justify-center mb-4">
                 {feature.icon}
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
