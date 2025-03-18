@@ -32,9 +32,13 @@ const AIFloorplanning = () => {
             </div>
             <div className="rounded-xl overflow-hidden shadow-lg border border-gray-100">
               <img 
-                src="https://images.unsplash.com/photo-1545043059-951e55a0f730?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                src="/lovable-uploads/fda12c36-2dfc-4412-95a8-d25158d12ec0.png" 
                 alt="AI Floor Planning Visualization" 
                 className="w-full h-auto object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = "https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
+                  console.log("Image failed to load, falling back to default");
+                }}
               />
             </div>
           </div>
