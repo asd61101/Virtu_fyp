@@ -36,8 +36,8 @@ const Navigation = () => {
       { name: 'Mood Boards', path: '/#mood-boards' },
       { name: '360° Walkthrough', path: '/360-walkthrough' },
     ]},
-    { name: 'Gallery', path: '/#gallery' },
-    { name: 'Pricing', path: '/#pricing' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'Pricing', path: '/pricing' },
   ];
 
   return (
