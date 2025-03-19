@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MousePointerClick, Cpu, LayoutGrid, PanelLeft, Zap } from "lucide-react";
+import { ArrowRight, MousePointerClick, Cpu, LayoutGrid, PanelLeft, Zap, Play } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -40,6 +40,40 @@ const AIFloorplanning = () => {
                   console.log("Image failed to load, falling back to default");
                 }}
               />
+            </div>
+          </div>
+        </section>
+        
+        {/* Demo Video Section */}
+        <section id="demo" className="py-20 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Watch AI Floorplanning in Action</h2>
+              <p className="text-lg text-gray-600">
+                See how our AI transforms simple requirements into detailed, optimized floor plans in minutes
+              </p>
+            </div>
+            
+            <div className="max-w-5xl mx-auto bg-gray-900 rounded-xl overflow-hidden shadow-xl aspect-video relative">
+              <iframe 
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              ></iframe>
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center text-white bg-black bg-opacity-30 opacity-100 hover:opacity-0 transition-opacity">
+                <div className="bg-virtuspace-600/80 rounded-full w-20 h-20 flex items-center justify-center cursor-pointer hover:bg-virtuspace-700/80 transition-colors">
+                  <Play className="h-10 w-10 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center mt-8">
+              <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
+                <Link to="/floor-plan-generator">Create Your Own AI Floor Plan</Link>
+              </Button>
             </div>
           </div>
         </section>
