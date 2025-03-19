@@ -27,7 +27,8 @@ const Navigation = () => {
     };
   }, []);
 
-  const isLoggedIn = false; // Replace with actual auth logic
+  // Check if user is logged in from localStorage
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   const navItems = [
     { name: 'Features', path: '/#features', dropdown: [
