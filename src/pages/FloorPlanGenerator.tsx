@@ -12,7 +12,12 @@ import {
   ChefHat, 
   Bath, 
   Workflow, 
-  ArrowRight 
+  ArrowRight,
+  Box,
+  Pencil,
+  Maximize2,
+  ChevronsUpDown,
+  Edit3
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,22 +28,32 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Toolbar from "@/components/editor/Toolbar";
 
-// Sample floor plan images
+// Sample floor plan images - actual floor plans rather than generic images
 const SAMPLE_FLOOR_PLANS = [
   {
     id: 1,
-    imageUrl: "https://images.unsplash.com/photo-1608501078713-8e445a709b39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1592247350590-67445a52f047?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     title: "Modern Studio Apartment",
+    image3D: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
   {
     id: 2,
-    imageUrl: "https://images.unsplash.com/photo-1580229040782-63cf3fcc1537?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1595776112836-4fadb6969777?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     title: "2-Bedroom Family Home",
+    image3D: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
+  {
+    id: 3,
+    imageUrl: "https://images.unsplash.com/photo-1598528644968-4242cc9db5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    title: "Open Concept Loft",
+    image3D: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  }
 ];
 
 const FloorPlanGenerator = () => {
@@ -52,21 +67,65 @@ const FloorPlanGenerator = () => {
   const [generatedFloorPlans, setGeneratedFloorPlans] = useState([]);
   const [selectedFloorPlan, setSelectedFloorPlan] = useState(null);
   const [openAI, setOpenAI] = useState(true);
+  const [roomDimensions, setRoomDimensions] = useState({ living: "12x14", kitchen: "10x12" });
+  const [ceilingHeight, setCeilingHeight] = useState("8");
+  const [viewMode, setViewMode] = useState("2d");
+  const [drawingRoomIncluded, setDrawingRoomIncluded] = useState(false);
+  const [floorLevel, setFloorLevel] = useState("ground");
 
   const handleGenerate = () => {
     setIsGenerating(true);
     
+    // Filter floor plans based on user inputs
+    let filteredPlans = [...SAMPLE_FLOOR_PLANS];
+    
+    // If drawing room is included, only show plans 2 and 3
+    if (drawingRoomIncluded) {
+      filteredPlans = filteredPlans.filter(plan => plan.id > 1);
+    }
+    
+    // Based on number of bedrooms, filter plans
+    if (Number(numBedrooms) <= 1) {
+      filteredPlans = filteredPlans.filter(plan => plan.id === 1 || plan.id === 3);
+    }
+    
     // Simulate AI generation delay
     setTimeout(() => {
       setIsGenerating(false);
-      setGeneratedFloorPlans(SAMPLE_FLOOR_PLANS);
+      setGeneratedFloorPlans(filteredPlans);
       toast.success("Floor plans generated successfully!");
-    }, 3000);
+    }, 2000);
   };
 
   const selectFloorPlan = (plan) => {
     setSelectedFloorPlan(plan);
     toast.success("Floor plan selected!");
+  };
+
+  const toggleViewMode = () => {
+    setViewMode(viewMode === "2d" ? "3d" : "2d");
+    toast.success(`Switched to ${viewMode === "2d" ? "3D" : "2D"} view`);
+  };
+
+  const handleRoomDimensionChange = (room, value) => {
+    setRoomDimensions({
+      ...roomDimensions,
+      [room]: value
+    });
+  };
+
+  const handleAdditionalRoomToggle = (roomId) => {
+    if (additionalRooms.includes(roomId)) {
+      setAdditionalRooms(additionalRooms.filter(r => r !== roomId));
+      if (roomId === "drawing" && drawingRoomIncluded) {
+        setDrawingRoomIncluded(false);
+      }
+    } else {
+      setAdditionalRooms([...additionalRooms, roomId]);
+      if (roomId === "drawing") {
+        setDrawingRoomIncluded(true);
+      }
+    }
   };
 
   return (
@@ -147,6 +206,21 @@ const FloorPlanGenerator = () => {
                   </div>
                   
                   <div>
+                    <Label className="mb-2 block">Floor Level</Label>
+                    <Select value={floorLevel} onValueChange={setFloorLevel}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select floor level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="basement">Basement</SelectItem>
+                        <SelectItem value="ground">Ground Floor</SelectItem>
+                        <SelectItem value="first">First Floor</SelectItem>
+                        <SelectItem value="second">Second Floor</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
                     <Label className="mb-2 block">Additional Rooms</Label>
                     <div className="flex flex-wrap gap-2">
                       {[
@@ -154,25 +228,60 @@ const FloorPlanGenerator = () => {
                         { id: "kitchen", label: "Kitchen", icon: <ChefHat className="h-3 w-3 mr-1" /> },
                         { id: "dining", label: "Dining Room", icon: <Users className="h-3 w-3 mr-1" /> },
                         { id: "office", label: "Home Office", icon: <Home className="h-3 w-3 mr-1" /> },
+                        { id: "drawing", label: "Drawing Room", icon: <Pencil className="h-3 w-3 mr-1" /> },
                       ].map((room) => (
                         <Button
                           key={room.id}
                           type="button"
                           variant={additionalRooms.includes(room.id) ? "default" : "outline"}
                           size="sm"
-                          onClick={() => {
-                            if (additionalRooms.includes(room.id)) {
-                              setAdditionalRooms(additionalRooms.filter(r => r !== room.id));
-                            } else {
-                              setAdditionalRooms([...additionalRooms, room.id]);
-                            }
-                          }}
+                          onClick={() => handleAdditionalRoomToggle(room.id)}
                           className="flex items-center"
                         >
                           {room.icon} {room.label}
                         </Button>
                       ))}
                     </div>
+                  </div>
+                  
+                  {/* Room dimensions section for selected rooms */}
+                  {additionalRooms.length > 0 && (
+                    <div>
+                      <Label className="mb-2 block">Room Dimensions (feet)</Label>
+                      <div className="space-y-3">
+                        {additionalRooms.map(room => (
+                          <div key={`${room}-dimensions`} className="flex items-center space-x-2">
+                            <span className="text-sm w-24">
+                              {room === "living" && "Living Room:"}
+                              {room === "kitchen" && "Kitchen:"}
+                              {room === "dining" && "Dining Room:"}
+                              {room === "office" && "Home Office:"}
+                              {room === "drawing" && "Drawing Room:"}
+                            </span>
+                            <Input 
+                              type="text"
+                              value={roomDimensions[room] || ""}
+                              onChange={(e) => handleRoomDimensionChange(room, e.target.value)}
+                              placeholder="e.g. 12x14"
+                              className="w-24"
+                            />
+                            <span className="text-xs text-gray-500">Width x Length</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div>
+                    <Label htmlFor="ceiling-height">Ceiling Height (feet)</Label>
+                    <Input 
+                      id="ceiling-height" 
+                      type="number"
+                      value={ceilingHeight}
+                      onChange={(e) => setCeilingHeight(e.target.value)}
+                      min="7"
+                      max="20"
+                    />
                   </div>
                   
                   <div>
@@ -280,15 +389,25 @@ const FloorPlanGenerator = () => {
                     <ChevronLeft className="h-4 w-4 mr-1" />
                     Back to results
                   </Button>
-                  <Button className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                    Download Floor Plan
-                  </Button>
+                  <div className="flex space-x-3">
+                    <Button 
+                      variant="outline" 
+                      className="flex items-center"
+                      onClick={toggleViewMode}
+                    >
+                      <ChevronsUpDown className="h-4 w-4 mr-1" />
+                      Switch to {viewMode === "2d" ? "3D" : "2D"} View
+                    </Button>
+                    <Button className="bg-virtuspace-500 hover:bg-virtuspace-600">
+                      Download Floor Plan
+                    </Button>
+                  </div>
                 </div>
                 
                 <Card>
                   <CardContent className="p-0 overflow-hidden">
                     <img 
-                      src={selectedFloorPlan.imageUrl} 
+                      src={viewMode === "2d" ? selectedFloorPlan.imageUrl : selectedFloorPlan.image3D} 
                       alt={selectedFloorPlan.title} 
                       className="w-full h-auto object-cover"
                     />
@@ -302,15 +421,35 @@ const FloorPlanGenerator = () => {
                       <p className="text-gray-600 mb-4">
                         {squareFootage} sq ft • {numBedrooms} Bedroom{numBedrooms !== "1" ? "s" : ""} • {numBathrooms} Bathroom{numBathrooms !== "1" ? "s" : ""}
                       </p>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2 mb-4">
                         {additionalRooms.map((room) => (
                           <span key={room} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-virtuspace-100 text-virtuspace-800">
                             {room === "living" && "Living Room"}
                             {room === "kitchen" && "Kitchen"}
                             {room === "dining" && "Dining Room"}
                             {room === "office" && "Home Office"}
+                            {room === "drawing" && "Drawing Room"}
                           </span>
                         ))}
+                      </div>
+                      
+                      {/* Room dimensions summary */}
+                      <div className="space-y-1">
+                        <h4 className="text-sm font-medium">Room Dimensions:</h4>
+                        <ul className="text-xs text-gray-600">
+                          {additionalRooms.map(room => (
+                            <li key={`${room}-dim-summary`} className="flex justify-between">
+                              <span>
+                                {room === "living" && "Living Room"}
+                                {room === "kitchen" && "Kitchen"}
+                                {room === "dining" && "Dining Room"}
+                                {room === "office" && "Home Office"}
+                                {room === "drawing" && "Drawing Room"}
+                              </span>
+                              <span>{roomDimensions[room] || "N/A"} ft</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </CardContent>
                   </Card>
@@ -330,10 +469,43 @@ const FloorPlanGenerator = () => {
                           <Workflow className="h-4 w-4 text-virtuspace-500 mr-2 mt-0.5" />
                           Bedroom placement maximizes privacy
                         </li>
+                        {drawingRoomIncluded && (
+                          <li className="flex items-start">
+                            <Workflow className="h-4 w-4 text-virtuspace-500 mr-2 mt-0.5" />
+                            Drawing room integrated with optimal flow to living areas
+                          </li>
+                        )}
                       </ul>
                     </CardContent>
                   </Card>
                 </div>
+                
+                {/* Edit toolbar for the floor plan */}
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-sm font-medium">Quick Edit Tools</h3>
+                      <Button size="sm" variant="ghost" className="text-xs">
+                        <Edit3 className="h-3 w-3 mr-1" />
+                        Advanced Editor
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <Button size="sm" variant="outline">
+                        <Maximize2 className="h-3 w-3 mr-1" />
+                        Resize Rooms
+                      </Button>
+                      <Button size="sm" variant="outline">
+                        <Box className="h-3 w-3 mr-1" />
+                        Add Furniture
+                      </Button>
+                      <Button size="sm" variant="outline">
+                        <DoorOpen className="h-3 w-3 mr-1" />
+                        Door Placement
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             ) : (
               <div className="space-y-6">
@@ -358,6 +530,7 @@ const FloorPlanGenerator = () => {
                             <h3 className="font-semibold">{plan.title}</h3>
                             <p className="text-sm text-gray-500">
                               {squareFootage} sq ft • {numBedrooms} Bed • {numBathrooms} Bath
+                              {drawingRoomIncluded && plan.id > 1 ? " • Drawing Room" : ""}
                             </p>
                           </div>
                           <Button 
