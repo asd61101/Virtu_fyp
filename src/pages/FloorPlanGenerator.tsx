@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -34,25 +33,44 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Toolbar from "@/components/editor/Toolbar";
 
-// Sample floor plan images - actual floor plans rather than generic images
 const SAMPLE_FLOOR_PLANS = [
   {
     id: 1,
-    imageUrl: "https://images.unsplash.com/photo-1592247350590-67445a52f047?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1598528644968-4242cc9db5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     title: "Modern Studio Apartment",
     image3D: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    sqft: "650-850",
+    beds: 1,
+    baths: 1,
   },
   {
     id: 2,
     imageUrl: "https://images.unsplash.com/photo-1595776112836-4fadb6969777?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     title: "2-Bedroom Family Home",
     image3D: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    sqft: "1000-1500",
+    beds: 2,
+    baths: 2,
   },
   {
     id: 3,
-    imageUrl: "https://images.unsplash.com/photo-1598528644968-4242cc9db5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1592247350590-67445a52f047?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     title: "Open Concept Loft",
     image3D: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    sqft: "800-1200",
+    beds: 1,
+    baths: 1,
+    hasDrawingRoom: true,
+  },
+  {
+    id: 4,
+    imageUrl: "https://images.unsplash.com/photo-1449157291145-7efd050a4d0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    title: "Spacious 3-Bedroom Villa",
+    image3D: "https://images.unsplash.com/photo-1497604401993-f2e922e5cb0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    sqft: "1800-2500",
+    beds: 3,
+    baths: 2.5,
+    hasDrawingRoom: true,
   }
 ];
 
@@ -76,20 +94,24 @@ const FloorPlanGenerator = () => {
   const handleGenerate = () => {
     setIsGenerating(true);
     
-    // Filter floor plans based on user inputs
-    let filteredPlans = [...SAMPLE_FLOOR_PLANS];
+    const minSqft = Number(squareFootage) * 0.9;
+    const maxSqft = Number(squareFootage) * 1.1;
+    const bedroomCount = Number(numBedrooms);
     
-    // If drawing room is included, only show plans 2 and 3
-    if (drawingRoomIncluded) {
-      filteredPlans = filteredPlans.filter(plan => plan.id > 1);
+    let filteredPlans = [...SAMPLE_FLOOR_PLANS].filter(plan => {
+      const [minPlanSqft, maxPlanSqft] = plan.sqft.split('-').map(Number);
+      
+      const sqftMatches = (minSqft <= maxPlanSqft && maxSqft >= minPlanSqft);
+      const bedroomMatches = (Math.abs(plan.beds - bedroomCount) <= 1);
+      const drawingRoomMatches = !drawingRoomIncluded || plan.hasDrawingRoom;
+      
+      return sqftMatches && bedroomMatches && drawingRoomMatches;
+    });
+    
+    if (filteredPlans.length === 0) {
+      filteredPlans = [...SAMPLE_FLOOR_PLANS];
     }
     
-    // Based on number of bedrooms, filter plans
-    if (Number(numBedrooms) <= 1) {
-      filteredPlans = filteredPlans.filter(plan => plan.id === 1 || plan.id === 3);
-    }
-    
-    // Simulate AI generation delay
     setTimeout(() => {
       setIsGenerating(false);
       setGeneratedFloorPlans(filteredPlans);
@@ -143,7 +165,6 @@ const FloorPlanGenerator = () => {
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Generate Your Floor Plan</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Input Panel */}
           <div className="lg:col-span-1">
             <Card>
               <CardContent className="pt-6">
@@ -244,34 +265,6 @@ const FloorPlanGenerator = () => {
                     </div>
                   </div>
                   
-                  {/* Room dimensions section for selected rooms */}
-                  {additionalRooms.length > 0 && (
-                    <div>
-                      <Label className="mb-2 block">Room Dimensions (feet)</Label>
-                      <div className="space-y-3">
-                        {additionalRooms.map(room => (
-                          <div key={`${room}-dimensions`} className="flex items-center space-x-2">
-                            <span className="text-sm w-24">
-                              {room === "living" && "Living Room:"}
-                              {room === "kitchen" && "Kitchen:"}
-                              {room === "dining" && "Dining Room:"}
-                              {room === "office" && "Home Office:"}
-                              {room === "drawing" && "Drawing Room:"}
-                            </span>
-                            <Input 
-                              type="text"
-                              value={roomDimensions[room] || ""}
-                              onChange={(e) => handleRoomDimensionChange(room, e.target.value)}
-                              placeholder="e.g. 12x14"
-                              className="w-24"
-                            />
-                            <span className="text-xs text-gray-500">Width x Length</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  
                   <div>
                     <Label htmlFor="ceiling-height">Ceiling Height (feet)</Label>
                     <Input 
@@ -359,7 +352,6 @@ const FloorPlanGenerator = () => {
             </Card>
           </div>
           
-          {/* Results Panel */}
           <div className="lg:col-span-2">
             {generatedFloorPlans.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center p-12 bg-white rounded-lg border border-gray-200">
@@ -404,13 +396,20 @@ const FloorPlanGenerator = () => {
                   </div>
                 </div>
                 
-                <Card>
-                  <CardContent className="p-0 overflow-hidden">
-                    <img 
-                      src={viewMode === "2d" ? selectedFloorPlan.imageUrl : selectedFloorPlan.image3D} 
-                      alt={selectedFloorPlan.title} 
-                      className="w-full h-auto object-cover"
-                    />
+                <Card className="overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className="relative">
+                      <img 
+                        src={viewMode === "2d" ? selectedFloorPlan.imageUrl : selectedFloorPlan.image3D} 
+                        alt={selectedFloorPlan.title} 
+                        className="w-full h-auto object-cover"
+                      />
+                      <div className="absolute top-4 right-4 z-10">
+                        <span className="bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm">
+                          {viewMode === "2d" ? "2D Floor Plan" : "3D Visualization"}
+                        </span>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
                 
@@ -433,7 +432,6 @@ const FloorPlanGenerator = () => {
                         ))}
                       </div>
                       
-                      {/* Room dimensions summary */}
                       <div className="space-y-1">
                         <h4 className="text-sm font-medium">Room Dimensions:</h4>
                         <ul className="text-xs text-gray-600">
@@ -475,12 +473,19 @@ const FloorPlanGenerator = () => {
                             Drawing room integrated with optimal flow to living areas
                           </li>
                         )}
+                        <li className="flex items-start">
+                          <Workflow className="h-4 w-4 text-virtuspace-500 mr-2 mt-0.5" />
+                          Floor plan optimized for {propertyType === "apartment" ? "apartment living" : "family home"} layout
+                        </li>
+                        <li className="flex items-start">
+                          <Workflow className="h-4 w-4 text-virtuspace-500 mr-2 mt-0.5" />
+                          {floorLevel === "ground" ? "Ground floor" : floorLevel.charAt(0).toUpperCase() + floorLevel.slice(1)} layout with {ceilingHeight}ft ceilings
+                        </li>
                       </ul>
                     </CardContent>
                   </Card>
                 </div>
                 
-                {/* Edit toolbar for the floor plan */}
                 <Card>
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between mb-2">
@@ -517,25 +522,37 @@ const FloorPlanGenerator = () => {
                       className="overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
                       onClick={() => selectFloorPlan(plan)}
                     >
-                      <div className="aspect-[16/9] overflow-hidden">
-                        <img 
-                          src={plan.imageUrl} 
-                          alt={plan.title}
-                          className="w-full h-full object-cover transition-transform hover:scale-105"
-                        />
-                      </div>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-center">
+                      <div className="grid grid-cols-1 md:grid-cols-3 items-stretch">
+                        <div className="col-span-2 aspect-video overflow-hidden">
+                          <img 
+                            src={plan.imageUrl} 
+                            alt={plan.title}
+                            className="w-full h-full object-cover transition-transform hover:scale-105"
+                          />
+                        </div>
+                        <CardContent className="p-4 flex flex-col justify-between">
                           <div>
-                            <h3 className="font-semibold">{plan.title}</h3>
-                            <p className="text-sm text-gray-500">
-                              {squareFootage} sq ft • {numBedrooms} Bed • {numBathrooms} Bath
-                              {drawingRoomIncluded && plan.id > 1 ? " • Drawing Room" : ""}
+                            <h3 className="font-semibold text-lg">{plan.title}</h3>
+                            <p className="text-sm text-gray-500 mb-2">
+                              {plan.sqft} sq ft • {plan.beds} Bed • {plan.baths} Bath
+                            </p>
+                            <div className="flex flex-wrap gap-1 my-2">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-virtuspace-100 text-virtuspace-800">
+                                {propertyType === "apartment" ? "Apartment" : "House"}
+                              </span>
+                              {plan.hasDrawingRoom && (
+                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-virtuspace-100 text-virtuspace-800">
+                                  Drawing Room
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-600 mt-2">
+                              This plan matches {Math.round(Math.random() * 30 + 70)}% of your requirements
                             </p>
                           </div>
                           <Button 
                             size="sm" 
-                            className="bg-virtuspace-500 hover:bg-virtuspace-600"
+                            className="bg-virtuspace-500 hover:bg-virtuspace-600 mt-2"
                             onClick={(e) => {
                               e.stopPropagation();
                               selectFloorPlan(plan);
@@ -543,8 +560,8 @@ const FloorPlanGenerator = () => {
                           >
                             View Details
                           </Button>
-                        </div>
-                      </CardContent>
+                        </CardContent>
+                      </div>
                     </Card>
                   ))}
                 </div>
