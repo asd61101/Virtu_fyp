@@ -23,7 +23,7 @@ const AIFloorplanning = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                  <Link to="/auth?mode=signup">Try AI Floorplanning Free</Link>
+                  <Link to="/floor-plan-generator">Try AI Floorplanning Free</Link>
                 </Button>
                 <Button asChild variant="outline" size="lg">
                   <a href="#how-it-works">See How It Works</a>
@@ -32,7 +32,7 @@ const AIFloorplanning = () => {
             </div>
             <div className="rounded-xl overflow-hidden shadow-lg border border-gray-100">
               <img 
-                src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                src="https://images.unsplash.com/photo-1574691250077-03a929faece5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                 alt="AI Floor Planning Visualization" 
                 className="w-full h-auto object-cover"
                 onError={(e) => {
@@ -152,7 +152,7 @@ const AIFloorplanning = () => {
               Join thousands of architects and designers who use our AI Floorplanning tool to create stunning, functional spaces in minutes.
             </p>
             <Button asChild size="lg" className="bg-white text-virtuspace-600 hover:bg-gray-100">
-              <Link to="/auth?mode=signup" className="px-8">Start Your Free Trial Today</Link>
+              <Link to="/floor-plan-generator" className="px-8">Start Your Free Trial Today</Link>
             </Button>
           </div>
         </section>

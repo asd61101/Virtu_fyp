@@ -13,6 +13,7 @@ import AIFloorplanning from "./pages/AIFloorplanning";
 import Walkthrough360 from "./pages/Walkthrough360";
 import Gallery from "./pages/Gallery";
 import Pricing from "./pages/Pricing";
+import FloorPlanGenerator from "./pages/FloorPlanGenerator";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/360-walkthrough" element={<Walkthrough360 />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/floor-plan-generator" element={<FloorPlanGenerator />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
