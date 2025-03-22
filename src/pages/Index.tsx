@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -12,9 +11,20 @@ const Index = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check login status
-    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(loggedInStatus);
+    const checkLoginStatus = () => {
+      const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+      setIsLoggedIn(loggedInStatus);
+    };
+    
+    checkLoginStatus();
+    
+    window.addEventListener('storage', checkLoginStatus);
+    window.addEventListener('loginStateChanged', checkLoginStatus);
+    
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('loginStateChanged', checkLoginStatus);
+    };
   }, []);
 
   return (
@@ -66,7 +76,7 @@ const Index = () => {
           
           <div className="mt-16 text-center">
             <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
-              <Link to={isLoggedIn ? "/dashboard" : "/auth"} className="flex items-center">
+              <Link to={isLoggedIn ? "/dashboard" : "/auth?mode=signup"} className="flex items-center">
                 {isLoggedIn ? "Go to Dashboard" : "Get Started Free"} <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -83,7 +93,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                <Link to={isLoggedIn ? "/dashboard" : "/auth"}>{isLoggedIn ? "Go to Dashboard" : "Try Virtuspace Free"}</Link>
+                <Link to={isLoggedIn ? "/dashboard" : "/auth?mode=signup"}>{isLoggedIn ? "Go to Dashboard" : "Try Virtuspace Free"}</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <a href="#features">Learn More</a>

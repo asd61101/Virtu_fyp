@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
@@ -36,6 +37,13 @@ const LoginForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const updateLoginState = () => {
+    localStorage.setItem('isLoggedIn', 'true');
+    // Dispatch both events for cross-browser compatibility
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('loginStateChanged'));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -46,8 +54,7 @@ const LoginForm = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      localStorage.setItem('isLoggedIn', 'true');
-      window.dispatchEvent(new Event('storage'));
+      updateLoginState();
       
       toast({
         title: "Login successful",
@@ -70,8 +77,7 @@ const LoginForm = () => {
     setIsLoading(true);
     
     setTimeout(() => {
-      localStorage.setItem('isLoggedIn', 'true');
-      window.dispatchEvent(new Event('storage'));
+      updateLoginState();
       
       toast({
         title: "Login successful",

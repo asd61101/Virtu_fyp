@@ -35,9 +35,14 @@ const Navigation = () => {
     // Listen for storage events to update the login status
     window.addEventListener('storage', checkLoginStatus);
     
+    // Custom event listener for login state changes
+    const handleLoginChange = () => checkLoginStatus();
+    window.addEventListener('loginStateChanged', handleLoginChange);
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('loginStateChanged', handleLoginChange);
     };
   }, []);
 

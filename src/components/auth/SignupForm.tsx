@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
@@ -43,6 +44,13 @@ const SignupForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const updateLoginState = () => {
+    localStorage.setItem('isLoggedIn', 'true');
+    // Dispatch both events for cross-browser compatibility
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new CustomEvent('loginStateChanged'));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -53,9 +61,7 @@ const SignupForm = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      localStorage.setItem('isLoggedIn', 'true');
-      
-      window.dispatchEvent(new Event('storage'));
+      updateLoginState();
       
       toast({
         title: "Account created",
@@ -78,9 +84,7 @@ const SignupForm = () => {
     setIsLoading(true);
     
     setTimeout(() => {
-      localStorage.setItem('isLoggedIn', 'true');
-      
-      window.dispatchEvent(new Event('storage'));
+      updateLoginState();
       
       toast({
         title: "Account created",
