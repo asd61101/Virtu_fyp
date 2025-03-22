@@ -24,12 +24,20 @@ const Navigation = () => {
 
     window.addEventListener('scroll', handleScroll);
     
-    // Check if user is logged in from localStorage
-    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
-    setIsLoggedIn(loggedInStatus);
+    // Check login status - use a reliable method to check
+    const checkLoginStatus = () => {
+      const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+      setIsLoggedIn(loggedInStatus);
+    };
+    
+    checkLoginStatus();
+    
+    // Listen for storage events to update the login status
+    window.addEventListener('storage', checkLoginStatus);
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('storage', checkLoginStatus);
     };
   }, []);
 

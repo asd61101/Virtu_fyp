@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
@@ -45,11 +44,10 @@ const LoginForm = () => {
     setIsLoading(true);
     
     try {
-      // Simulate login API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mock successful login
       localStorage.setItem('isLoggedIn', 'true');
+      window.dispatchEvent(new Event('storage'));
       
       toast({
         title: "Login successful",
@@ -71,9 +69,9 @@ const LoginForm = () => {
   const handleGoogleLogin = () => {
     setIsLoading(true);
     
-    // Simulate Google login
     setTimeout(() => {
       localStorage.setItem('isLoggedIn', 'true');
+      window.dispatchEvent(new Event('storage'));
       
       toast({
         title: "Login successful",

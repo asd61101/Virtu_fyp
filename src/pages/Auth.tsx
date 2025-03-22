@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoginForm from "@/components/auth/LoginForm";
 import SignupForm from "@/components/auth/SignupForm";
@@ -9,6 +9,16 @@ import { ChevronLeft } from "lucide-react";
 const Auth = () => {
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check URL parameters for login/signup mode
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const mode = searchParams.get("mode");
+    if (mode === "login" || mode === "signup") {
+      setActiveTab(mode);
+    }
+  }, [location.search]);
 
   // Check if the user is already logged in
   useEffect(() => {

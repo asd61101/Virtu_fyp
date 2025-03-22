@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
@@ -52,11 +51,11 @@ const SignupForm = () => {
     setIsLoading(true);
     
     try {
-      // Simulate signup API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mock successful signup
       localStorage.setItem('isLoggedIn', 'true');
+      
+      window.dispatchEvent(new Event('storage'));
       
       toast({
         title: "Account created",
@@ -78,9 +77,10 @@ const SignupForm = () => {
   const handleGoogleSignup = () => {
     setIsLoading(true);
     
-    // Simulate Google signup
     setTimeout(() => {
       localStorage.setItem('isLoggedIn', 'true');
+      
+      window.dispatchEvent(new Event('storage'));
       
       toast({
         title: "Account created",
