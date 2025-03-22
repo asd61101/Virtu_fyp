@@ -1,12 +1,18 @@
+
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
-import { Eye, Upload, Repeat, FileUp, FileCheck, Play, Globe } from "lucide-react";
+import { Eye, FileUp, Globe } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+
+// Import the refactored components
+import UploadForm from "@/components/walkthrough/UploadForm";
+import UploadingState from "@/components/walkthrough/UploadingState";
+import SuccessState from "@/components/walkthrough/SuccessState";
+import ErrorState from "@/components/walkthrough/ErrorState";
 
 const WalkthroughGenerator = () => {
   const [uploadType, setUploadType] = useState<"image" | "pdf">("image");
@@ -108,103 +114,6 @@ const WalkthroughGenerator = () => {
       </main>
 
       <Footer />
-    </div>
-  );
-};
-
-interface UploadFormProps {
-  uploadType: "image" | "pdf";
-  onFileUpload: (file: File) => void;
-}
-
-const UploadForm: React.FC<UploadFormProps> = ({ uploadType, onFileUpload }) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
-
-  const handleSubmit = () => {
-    if (selectedFile) {
-      onFileUpload(selectedFile);
-    }
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center space-y-4">
-      <label
-        htmlFor="file-upload"
-        className="cursor-pointer bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-md transition-colors duration-200"
-      >
-        <Upload className="h-5 w-5 mr-2 inline-block" />
-        <span>{`Select ${uploadType === "image" ? "Image" : "PDF"} File`}</span>
-        <input id="file-upload" type="file" className="hidden" onChange={handleFileSelect} />
-      </label>
-      {selectedFile && (
-        <div className="text-sm text-gray-500">
-          Selected File: {selectedFile.name}
-        </div>
-      )}
-      <Button onClick={handleSubmit} disabled={!selectedFile}>
-        Generate Walkthrough
-      </Button>
-    </div>
-  );
-};
-
-interface UploadingStateProps {
-  progress: number;
-}
-
-const UploadingState: React.FC<UploadingStateProps> = ({ progress }) => {
-  return (
-    <div className="flex flex-col items-center justify-center space-y-4">
-      <Repeat className="h-10 w-10 animate-spin text-virtuspace-500" />
-      <p className="text-gray-600">Uploading and Processing...</p>
-      <progress value={progress} max="100" className="w-full h-2 rounded-full"></progress>
-      <span className="text-sm text-gray-500">{progress}%</span>
-    </div>
-  );
-};
-
-interface SuccessStateProps {
-  walkthroughUrl: string;
-  onRetry: () => void;
-}
-
-const SuccessState: React.FC<SuccessStateProps> = ({ walkthroughUrl, onRetry }) => {
-  return (
-    <div className="flex flex-col items-center justify-center space-y-4">
-      <FileCheck className="h-10 w-10 text-green-500" />
-      <p className="text-gray-600">Walkthrough generated successfully!</p>
-      <Button asChild>
-        <Link to={walkthroughUrl} target="_blank" rel="noopener noreferrer">
-          View Walkthrough
-        </Link>
-      </Button>
-      <Button variant="outline" onClick={onRetry}>
-        <Repeat className="h-4 w-4 mr-2" />
-        Retry
-      </Button>
-    </div>
-  );
-};
-
-interface ErrorStateProps {
-  onRetry: () => void;
-}
-
-const ErrorState: React.FC<ErrorStateProps> = ({ onRetry }) => {
-  return (
-    <div className="flex flex-col items-center justify-center space-y-4">
-      <p className="text-red-600">Failed to generate walkthrough. Please try again.</p>
-      <Button variant="outline" onClick={onRetry}>
-        <Repeat className="h-4 w-4 mr-2" />
-        Retry
-      </Button>
     </div>
   );
 };
