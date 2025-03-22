@@ -1,7 +1,8 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LogIn, UserPlus } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import Features from "@/components/Features";
@@ -75,11 +76,26 @@ const Index = () => {
           </div>
           
           <div className="mt-16 text-center">
-            <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
-              <Link to={isLoggedIn ? "/dashboard" : "/auth?mode=signup"} className="flex items-center">
-                {isLoggedIn ? "Go to Dashboard" : "Get Started Free"} <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            {isLoggedIn ? (
+              <Button asChild size="lg" variant="outline">
+                <Link to="/" className="flex items-center">
+                  Explore Features <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            ) : (
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild size="lg" variant="outline">
+                  <Link to="/auth?mode=login" className="flex items-center">
+                    <LogIn className="mr-2 h-4 w-4" /> Login
+                  </Link>
+                </Button>
+                <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
+                  <Link to="/auth?mode=signup" className="flex items-center">
+                    <UserPlus className="mr-2 h-4 w-4" /> Sign Up Free
+                  </Link>
+                </Button>
+              </div>
+            )}
           </div>
         </section>
         
@@ -92,12 +108,22 @@ const Index = () => {
               Join thousands of architects and designers who use Virtuspace to bring their visions to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                <Link to={isLoggedIn ? "/dashboard" : "/auth?mode=signup"}>{isLoggedIn ? "Go to Dashboard" : "Try Virtuspace Free"}</Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <a href="#features">Learn More</a>
-              </Button>
+              {isLoggedIn ? (
+                <Button asChild size="lg" variant="outline">
+                  <Link to="/">Explore More</Link>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
+                    <Link to="/auth?mode=signup" className="flex items-center">
+                      <UserPlus className="mr-2 h-4 w-4" /> Try Virtuspace Free
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <a href="#features">Learn More</a>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </section>

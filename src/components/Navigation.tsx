@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, LogIn, UserPlus } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -109,16 +109,22 @@ const Navigation = () => {
           <div className="hidden md:block">
             <div className="flex items-center space-x-3">
               {isLoggedIn ? (
-                <Button asChild className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                  <Link to="/dashboard">Dashboard</Link>
+                <Button variant="outline" asChild className="text-virtuspace-500 hover:text-virtuspace-600">
+                  <Link to="/">Home</Link>
                 </Button>
               ) : (
                 <>
                   <Button variant="ghost" asChild className="text-virtuspace-500 hover:text-virtuspace-600">
-                    <Link to="/auth?mode=login">Login</Link>
+                    <Link to="/auth?mode=login" className="flex items-center gap-1">
+                      <LogIn size={16} />
+                      Login
+                    </Link>
                   </Button>
                   <Button asChild className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                    <Link to="/auth?mode=signup">Sign Up Free</Link>
+                    <Link to="/auth?mode=signup" className="flex items-center gap-1">
+                      <UserPlus size={16} />
+                      Sign Up Free
+                    </Link>
                   </Button>
                 </>
               )}
@@ -173,11 +179,12 @@ const Navigation = () => {
             <div className="flex items-center justify-center space-x-3 px-5 py-3">
               {isLoggedIn ? (
                 <Button 
+                  variant="outline" 
                   asChild 
-                  className="w-full bg-virtuspace-500 hover:bg-virtuspace-600"
+                  className="w-full"
                   onClick={toggleMenu}
                 >
-                  <Link to="/dashboard">Dashboard</Link>
+                  <Link to="/">Home</Link>
                 </Button>
               ) : (
                 <>
@@ -187,14 +194,20 @@ const Navigation = () => {
                     className="w-full"
                     onClick={toggleMenu}
                   >
-                    <Link to="/auth?mode=login">Login</Link>
+                    <Link to="/auth?mode=login" className="flex items-center justify-center gap-1">
+                      <LogIn size={16} />
+                      Login
+                    </Link>
                   </Button>
                   <Button 
                     asChild 
                     className="w-full bg-virtuspace-500 hover:bg-virtuspace-600"
                     onClick={toggleMenu}
                   >
-                    <Link to="/auth?mode=signup">Sign Up Free</Link>
+                    <Link to="/auth?mode=signup" className="flex items-center justify-center gap-1">
+                      <UserPlus size={16} />
+                      Sign Up Free
+                    </Link>
                   </Button>
                 </>
               )}
