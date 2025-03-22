@@ -1,11 +1,12 @@
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const HeroSection = () => {
   const heroImageRef = useRef<HTMLDivElement>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -21,6 +22,10 @@ const HeroSection = () => {
     };
     
     document.addEventListener('mousemove', handleMouseMove);
+    
+    // Check login status
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
     
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
@@ -50,8 +55,8 @@ const HeroSection = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600 text-white rounded-full px-8">
-                <Link to="/auth?mode=signup">
-                  Start Free
+                <Link to={isLoggedIn ? "/dashboard" : "/auth?mode=signup"}>
+                  {isLoggedIn ? "Dashboard" : "Start Free"}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>

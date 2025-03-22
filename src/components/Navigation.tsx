@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -22,13 +23,15 @@ const Navigation = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
+    
+    // Check if user is logged in from localStorage
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  // Check if user is logged in from localStorage
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   const navItems = [
     { name: 'Features', path: '/#features', dropdown: [

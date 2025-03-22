@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -8,6 +9,14 @@ import Features from "@/components/Features";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check login status
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white">
       <Navigation />
@@ -57,8 +66,8 @@ const Index = () => {
           
           <div className="mt-16 text-center">
             <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
-              <Link to="/auth" className="flex items-center">
-                Get Started Free <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to={isLoggedIn ? "/dashboard" : "/auth"} className="flex items-center">
+                {isLoggedIn ? "Go to Dashboard" : "Get Started Free"} <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -74,7 +83,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                <Link to="/auth">Try Virtuspace Free</Link>
+                <Link to={isLoggedIn ? "/dashboard" : "/auth"}>{isLoggedIn ? "Go to Dashboard" : "Try Virtuspace Free"}</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <a href="#features">Learn More</a>
