@@ -1,21 +1,12 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogIn, UserPlus, Calculator } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -31,24 +22,24 @@ const Navigation = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    
-    // Check login status
-    const checkLoginStatus = () => {
-      const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
-      setIsLoggedIn(loggedInStatus);
-    };
-    
-    checkLoginStatus();
-    
-    window.addEventListener('storage', checkLoginStatus);
-    window.addEventListener('loginStateChanged', checkLoginStatus);
-    
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('storage', checkLoginStatus);
-      window.removeEventListener('loginStateChanged', checkLoginStatus);
     };
   }, []);
+
+  // Check if user is logged in from localStorage
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+  const navItems = [
+    { name: 'Features', path: '/#features', dropdown: [
+      { name: 'AI Floorplanning', path: '/ai-floorplanning' },
+      { name: 'Interactive 3D', path: '/#interactive-3d' },
+      { name: 'Mood Boards', path: '/#mood-boards' },
+      { name: '360° Walkthrough', path: '/360-walkthrough' },
+    ]},
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'Pricing', path: '/pricing' },
+  ];
 
   return (
     <nav 
@@ -65,79 +56,57 @@ const Navigation = () => {
             </Link>
           </div>
           
-          <div className="hidden md:flex md:space-x-8 items-center">
-            <Popover>
-              <PopoverTrigger className="flex items-center gap-1 text-gray-700 hover:text-virtuspace-600">
-                Features <ChevronDown size={16} />
-              </PopoverTrigger>
-              <PopoverContent className="w-56 p-0">
-                <div className="p-4 bg-white rounded-lg shadow-lg">
-                  <div className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-md transition-colors">
-                    <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-md text-blue-500">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500">3D Ready</div>
-                      <div className="text-sm font-medium">View in AR/VR</div>
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-center space-x-4">
+              {navItems.map((item) => 
+                item.dropdown ? (
+                  <div key={item.name} className="relative group">
+                    <button className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-700 hover:text-virtuspace-600 transition-colors">
+                      {item.name}
+                      <ChevronDown size={16} className="ml-1 transition-transform group-hover:rotate-180" />
+                    </button>
+                    <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top-left">
+                      {item.dropdown.map((subItem) => (
+                        <Link
+                          key={subItem.name}
+                          to={subItem.path}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-virtuspace-50 hover:text-virtuspace-600"
+                        >
+                          {subItem.name}
+                        </Link>
+                      ))}
                     </div>
                   </div>
-                  
-                  <Link to="/360-walkthrough" className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-md transition-colors">
-                    <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-md text-blue-500">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M16.2 7.8l-2.8 8.4H9.8l-2.8-8.4"></path>
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500">Interactive</div>
-                      <div className="text-sm font-medium">360° Walkthrough</div>
-                    </div>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-virtuspace-600 transition-colors"
+                  >
+                    {item.name}
                   </Link>
-                  
-                  <Link to="/cost-estimation" className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-md transition-colors">
-                    <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-md text-blue-500">
-                      <Calculator className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-500">Budget Planning</div>
-                      <div className="text-sm font-medium">Cost Estimation</div>
-                    </div>
-                  </Link>
-                </div>
-              </PopoverContent>
-            </Popover>
-
-            <Link to="/gallery" className="text-gray-700 hover:text-virtuspace-600">
-              Gallery
-            </Link>
-            
-            <Link to="/pricing" className="text-gray-700 hover:text-virtuspace-600">
-              Pricing
-            </Link>
+                )
+              )}
+            </div>
           </div>
           
-          <div className="hidden md:flex items-center space-x-4">
-            {isLoggedIn ? (
-              <Button variant="outline" asChild>
-                <Link to="/dashboard">Dashboard</Link>
-              </Button>
-            ) : (
-              <>
-                <Button variant="ghost" asChild className="text-[#1087e0] hover:text-virtuspace-600">
-                  <Link to="/auth?mode=login">
-                    Login
-                  </Link>
+          <div className="hidden md:block">
+            <div className="flex items-center space-x-3">
+              {isLoggedIn ? (
+                <Button asChild className="bg-virtuspace-500 hover:bg-virtuspace-600">
+                  <Link to="/dashboard">Dashboard</Link>
                 </Button>
-                <Button asChild className="bg-[#1087e0] hover:bg-virtuspace-600 text-white">
-                  <Link to="/auth?mode=signup">
-                    Sign Up Free
-                  </Link>
-                </Button>
-              </>
-            )}
+              ) : (
+                <>
+                  <Button variant="ghost" asChild className="text-virtuspace-500 hover:text-virtuspace-600">
+                    <Link to="/auth?mode=login">Login</Link>
+                  </Button>
+                  <Button asChild className="bg-virtuspace-500 hover:bg-virtuspace-600">
+                    <Link to="/auth?mode=signup">Sign Up Free</Link>
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
           
           <div className="md:hidden flex items-center">
@@ -155,17 +124,7 @@ const Navigation = () => {
       {isOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-sm shadow-lg animate-slide-down">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {[
-              { name: 'Features', path: '/#features', dropdown: [
-                { name: 'AI Floorplanning', path: '/ai-floorplanning' },
-                { name: 'Interactive 3D', path: '/#interactive-3d' },
-                { name: 'Mood Boards', path: '/#mood-boards' },
-                { name: '360° Walkthrough', path: '/360-walkthrough' },
-                { name: 'Cost Estimation', path: '/cost-estimation' },
-              ]},
-              { name: 'Gallery', path: '/gallery' },
-              { name: 'Pricing', path: '/pricing' },
-            ].map((item) => 
+            {navItems.map((item) => 
               item.dropdown ? (
                 <div key={item.name} className="space-y-1">
                   <div className="px-3 py-2 text-sm font-medium text-gray-700">{item.name}</div>
@@ -198,12 +157,11 @@ const Navigation = () => {
             <div className="flex items-center justify-center space-x-3 px-5 py-3">
               {isLoggedIn ? (
                 <Button 
-                  variant="outline" 
                   asChild 
-                  className="w-full"
+                  className="w-full bg-virtuspace-500 hover:bg-virtuspace-600"
                   onClick={toggleMenu}
                 >
-                  <Link to="/">Home</Link>
+                  <Link to="/dashboard">Dashboard</Link>
                 </Button>
               ) : (
                 <>
@@ -213,20 +171,14 @@ const Navigation = () => {
                     className="w-full"
                     onClick={toggleMenu}
                   >
-                    <Link to="/auth?mode=login" className="flex items-center justify-center gap-1">
-                      <LogIn size={16} />
-                      Login
-                    </Link>
+                    <Link to="/auth?mode=login">Login</Link>
                   </Button>
                   <Button 
                     asChild 
-                    className="w-full bg-[#1087e0] hover:bg-virtuspace-600"
+                    className="w-full bg-virtuspace-500 hover:bg-virtuspace-600"
                     onClick={toggleMenu}
                   >
-                    <Link to="/auth?mode=signup" className="flex items-center justify-center gap-1">
-                      <UserPlus size={16} />
-                      Sign Up Free
-                    </Link>
+                    <Link to="/auth?mode=signup">Sign Up Free</Link>
                   </Button>
                 </>
               )}

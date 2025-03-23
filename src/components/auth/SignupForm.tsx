@@ -44,13 +44,6 @@ const SignupForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const updateLoginState = () => {
-    localStorage.setItem('isLoggedIn', 'true');
-    // Dispatch both events for cross-browser compatibility
-    window.dispatchEvent(new Event('storage'));
-    window.dispatchEvent(new CustomEvent('loginStateChanged'));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -59,9 +52,11 @@ const SignupForm = () => {
     setIsLoading(true);
     
     try {
+      // Simulate signup API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      updateLoginState();
+      // Mock successful signup
+      localStorage.setItem('isLoggedIn', 'true');
       
       toast({
         title: "Account created",
@@ -83,8 +78,9 @@ const SignupForm = () => {
   const handleGoogleSignup = () => {
     setIsLoading(true);
     
+    // Simulate Google signup
     setTimeout(() => {
-      updateLoginState();
+      localStorage.setItem('isLoggedIn', 'true');
       
       toast({
         title: "Account created",

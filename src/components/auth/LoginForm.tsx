@@ -37,13 +37,6 @@ const LoginForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const updateLoginState = () => {
-    localStorage.setItem('isLoggedIn', 'true');
-    // Dispatch both events for cross-browser compatibility
-    window.dispatchEvent(new Event('storage'));
-    window.dispatchEvent(new CustomEvent('loginStateChanged'));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -52,9 +45,11 @@ const LoginForm = () => {
     setIsLoading(true);
     
     try {
+      // Simulate login API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      updateLoginState();
+      // Mock successful login
+      localStorage.setItem('isLoggedIn', 'true');
       
       toast({
         title: "Login successful",
@@ -76,8 +71,9 @@ const LoginForm = () => {
   const handleGoogleLogin = () => {
     setIsLoading(true);
     
+    // Simulate Google login
     setTimeout(() => {
-      updateLoginState();
+      localStorage.setItem('isLoggedIn', 'true');
       
       toast({
         title: "Login successful",
