@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import DashboardNav from "@/components/dashboard/DashboardNav";
 import { 
   Plus, Search, Home, Folder, Layout, FileText, BarChart4,
-  Settings2, HelpCircle, Users, Grid, ListIcon, Edit3, ImageIcon
+  Settings2, HelpCircle, Users, Grid, ListIcon, Edit3, ImageIcon,
+  Calculator
 } from "lucide-react";
 import ProjectList from "@/components/dashboard/ProjectList";
 
@@ -216,7 +217,7 @@ const Dashboard = () => {
             </div>
             
             {/* Feature cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:grid-cols-5 gap-4 mb-8">
               <Link to="/ai-floorplanning" className="bg-white rounded-lg border border-gray-200 p-4 hover:border-virtuspace-300 hover:shadow-md transition-all">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center mb-3">
@@ -262,6 +263,18 @@ const Dashboard = () => {
                     <h3 className="ml-3 text-base font-medium text-gray-900">360° Walkthrough</h3>
                   </div>
                   <p className="text-xs text-gray-600">Explore interior/exterior design styles</p>
+                </div>
+              </Link>
+              
+              <Link to="/cost-estimation" className="bg-white rounded-lg border border-gray-200 p-4 hover:border-virtuspace-300 hover:shadow-md transition-all">
+                <div className="flex flex-col h-full">
+                  <div className="flex items-center mb-3">
+                    <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
+                      <Calculator className="h-5 w-5 text-virtuspace-600" />
+                    </div>
+                    <h3 className="ml-3 text-base font-medium text-gray-900">Cost Estimation</h3>
+                  </div>
+                  <p className="text-xs text-gray-600">Calculate project costs and material estimates</p>
                 </div>
               </Link>
             </div>

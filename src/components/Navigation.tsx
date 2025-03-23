@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogIn, UserPlus } from 'lucide-react';
+import { Menu, X, ChevronDown, LogIn, UserPlus, Calculator } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -83,6 +83,29 @@ const Navigation = () => {
                       <div className="text-sm font-medium">View in AR/VR</div>
                     </div>
                   </div>
+                  
+                  <Link to="/360-walkthrough" className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-md transition-colors">
+                    <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-md text-blue-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M16.2 7.8l-2.8 8.4H9.8l-2.8-8.4"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-500">Interactive</div>
+                      <div className="text-sm font-medium">360° Walkthrough</div>
+                    </div>
+                  </Link>
+                  
+                  <Link to="/cost-estimation" className="flex items-center gap-3 p-2 hover:bg-blue-50 rounded-md transition-colors">
+                    <div className="w-10 h-10 flex items-center justify-center bg-blue-100 rounded-md text-blue-500">
+                      <Calculator className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-500">Budget Planning</div>
+                      <div className="text-sm font-medium">Cost Estimation</div>
+                    </div>
+                  </Link>
                 </div>
               </PopoverContent>
             </Popover>
@@ -138,6 +161,7 @@ const Navigation = () => {
                 { name: 'Interactive 3D', path: '/#interactive-3d' },
                 { name: 'Mood Boards', path: '/#mood-boards' },
                 { name: '360° Walkthrough', path: '/360-walkthrough' },
+                { name: 'Cost Estimation', path: '/cost-estimation' },
               ]},
               { name: 'Gallery', path: '/gallery' },
               { name: 'Pricing', path: '/pricing' },
