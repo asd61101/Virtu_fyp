@@ -86,8 +86,8 @@ const HeroSection = () => {
                 </div>
                 <div className="pt-10 h-full bg-gray-50">
                   <img 
-                    src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" 
-                    alt="Modern Architecture Visualization" 
+                    src="https://images.unsplash.com/photo-1486718448742-163732cd1544?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" 
+                    alt="Modern Architecture Design" 
                     className="w-full h-full object-cover"
                   />
                 </div>
