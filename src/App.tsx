@@ -15,6 +15,7 @@ import Gallery from "./pages/Gallery";
 import Pricing from "./pages/Pricing";
 import FloorPlanGenerator from "./pages/FloorPlanGenerator";
 import WalkthroughGenerator from "./pages/WalkthroughGenerator";
+import CostEstimation from "./pages/CostEstimation";
 
 const queryClient = new QueryClient();
 
