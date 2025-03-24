@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import { PageHeader } from '@/components/ui/page-header';
 import MaterialSelector from '@/components/cost-estimation/MaterialSelector';
 import CostBreakdown from '@/components/cost-estimation/CostBreakdown';
