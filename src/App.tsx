@@ -15,7 +15,6 @@ import Gallery from "./pages/Gallery";
 import Pricing from "./pages/Pricing";
 import FloorPlanGenerator from "./pages/FloorPlanGenerator";
 import WalkthroughGenerator from "./pages/WalkthroughGenerator";
-import CostEstimation from "./pages/CostEstimation";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +31,7 @@ const App = () => (
           <Route path="/editor/:projectId" element={<ProjectEditor />} />
           <Route path="/ai-floorplanning" element={<AIFloorplanning />} />
           <Route path="/360-walkthrough" element={<Walkthrough360 />} />
-          <Route path="/cost-estimation" element={<CostEstimation />} />
+          <Route path="/cost-estimation" element={<CostEstimation />} /> {/* Added new route */}
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/floor-plan-generator" element={<FloorPlanGenerator />} />
