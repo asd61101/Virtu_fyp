@@ -1,13 +1,12 @@
 
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Bell, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Bell, User, Settings, LogOut } from "lucide-react";
 
 const DashboardNav = () => {
   return (
@@ -19,30 +18,26 @@ const DashboardNav = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="text-gray-500 hover:text-gray-700">
+            <button className="text-gray-500 hover:text-gray-700">
               <Bell className="h-5 w-5" />
-            </Button>
+            </button>
 
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
-                  <div className="w-8 h-8 rounded-full bg-virtuspace-100 flex items-center justify-center">
-                    <User className="h-5 w-5 text-virtuspace-600" />
-                  </div>
-                  <span className="hidden md:inline text-sm font-medium">John Doe</span>
-                </Button>
+              <DropdownMenuTrigger className="flex items-center space-x-2">
+                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                  <span className="font-medium">JD</span>
+                </div>
+                <span className="hidden md:inline font-medium text-gray-700">John Doe</span>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-white border border-gray-200">
-                <DropdownMenuItem className="hover:bg-gray-50 text-gray-700 focus:bg-gray-50 focus:text-gray-900">
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:bg-gray-50 text-gray-700 focus:bg-gray-50 focus:text-gray-900">
-                  <Settings className="mr-2 h-4 w-4" />
+                <DropdownMenuItem>
                   <span>Settings</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-600 hover:bg-gray-50 focus:bg-gray-50 focus:text-red-700">
-                  <LogOut className="mr-2 h-4 w-4" />
+                <DropdownMenuItem>
                   <span>Logout</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
