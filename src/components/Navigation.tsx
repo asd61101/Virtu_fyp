@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, LogIn, UserPlus } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
@@ -99,10 +99,16 @@ const Navigation = () => {
               ) : (
                 <>
                   <Button variant="ghost" asChild className="text-virtuspace-500 hover:text-virtuspace-600">
-                    <Link to="/auth?mode=login">Login</Link>
+                    <Link to="/login" className="flex items-center">
+                      <LogIn className="mr-2 h-4 w-4" />
+                      Login
+                    </Link>
                   </Button>
                   <Button asChild className="bg-virtuspace-500 hover:bg-virtuspace-600">
-                    <Link to="/auth?mode=signup">Sign Up Free</Link>
+                    <Link to="/signup" className="flex items-center">
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      Sign Up Free
+                    </Link>
                   </Button>
                 </>
               )}
@@ -171,14 +177,20 @@ const Navigation = () => {
                     className="w-full"
                     onClick={toggleMenu}
                   >
-                    <Link to="/auth?mode=login">Login</Link>
+                    <Link to="/login" className="flex items-center justify-center">
+                      <LogIn className="mr-2 h-4 w-4" />
+                      Login
+                    </Link>
                   </Button>
                   <Button 
                     asChild 
                     className="w-full bg-virtuspace-500 hover:bg-virtuspace-600"
                     onClick={toggleMenu}
                   >
-                    <Link to="/auth?mode=signup">Sign Up Free</Link>
+                    <Link to="/signup" className="flex items-center justify-center">
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      Sign Up Free
+                    </Link>
                   </Button>
                 </>
               )}
