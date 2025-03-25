@@ -20,20 +20,20 @@ const CostBreakdown = ({ totalCost, budget }: CostBreakdownProps) => {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <span className="text-gray-600">Materials Total:</span>
-            <span className="text-lg font-semibold">${totalCost.toFixed(2)}</span>
+            <span className="text-lg font-semibold">₹{totalCost.toFixed(2)}</span>
           </div>
           
           {budget > 0 && (
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Budget:</span>
-              <span className="text-lg font-semibold">${budget.toFixed(2)}</span>
+              <span className="text-lg font-semibold">₹{budget.toFixed(2)}</span>
             </div>
           )}
           
           {isOverBudget && (
             <div className="flex items-center gap-2 text-red-500 bg-red-50 p-3 rounded-md">
               <AlertTriangle className="h-5 w-5" />
-              <span>Warning: Cost exceeds budget by ${(totalCost - budget).toFixed(2)}</span>
+              <span>Warning: Cost exceeds budget by ₹{(totalCost - budget).toFixed(2)}</span>
             </div>
           )}
         </div>

@@ -25,7 +25,7 @@ const Pricing = () => {
     },
     {
       name: "Professional",
-      price: "$29",
+      price: "₹29",
       period: "per month",
       description: "For serious designers and architects",
       features: [
@@ -44,7 +44,7 @@ const Pricing = () => {
     },
     {
       name: "Enterprise",
-      price: "$99",
+      price: "₹99",
       period: "per month",
       description: "For design teams and businesses",
       features: [

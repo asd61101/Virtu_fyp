@@ -220,7 +220,7 @@ const MaterialSelection = () => {
                             <h3 className="font-medium text-sm">{material.name}</h3>
                             <div className="flex items-center justify-between mt-1">
                               <span className="text-xs text-gray-500 capitalize">{material.subtype}</span>
-                              <span className="text-xs font-medium">${material.costPerUnit}/{material.unit}</span>
+                              <span className="text-xs font-medium">₹{material.costPerUnit}/{material.unit}</span>
                             </div>
                           </div>
                           {selectedMaterial?.id === material.id && (
@@ -261,7 +261,7 @@ const MaterialSelection = () => {
                         <div>
                           <h3 className="text-lg font-semibold">{selectedMaterial.name}</h3>
                           <p className="text-sm text-gray-500 capitalize">Type: {selectedMaterial.subtype}</p>
-                          <p className="text-sm font-medium mt-1">Cost: ${selectedMaterial.costPerUnit} per {selectedMaterial.unit}</p>
+                          <p className="text-sm font-medium mt-1">Cost: ₹{selectedMaterial.costPerUnit} per {selectedMaterial.unit}</p>
                         </div>
                         
                         <div className="pt-2">
@@ -308,9 +308,9 @@ const MaterialSelection = () => {
                                   <p className="text-sm text-gray-500">{material.name}</p>
                                 </div>
                                 <div className="text-right">
-                                  <p className="font-medium">${material.costPerUnit * (quantities[material.id] || 0)}</p>
+                                  <p className="font-medium">₹{material.costPerUnit * (quantities[material.id] || 0)}</p>
                                   <p className="text-sm text-gray-500">
-                                    {quantities[material.id] || 0} {material.unit} × ${material.costPerUnit}
+                                    {quantities[material.id] || 0} {material.unit} × ₹{material.costPerUnit}
                                   </p>
                                 </div>
                               </div>
@@ -319,7 +319,7 @@ const MaterialSelection = () => {
                           
                           <div className="flex justify-between items-center pt-2 border-t border-dashed">
                             <p className="font-semibold">Total Cost:</p>
-                            <p className="font-semibold text-xl">${totalCost.toFixed(2)}</p>
+                            <p className="font-semibold text-xl">₹{totalCost.toFixed(2)}</p>
                           </div>
                         </>
                       ) : (

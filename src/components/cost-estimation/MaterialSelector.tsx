@@ -51,7 +51,7 @@ const MaterialSelector = ({ setTotalCost }: MaterialSelectorProps) => {
               <div className="flex-1">
                 <Label htmlFor={material.id}>{material.name}</Label>
                 <div className="text-sm text-gray-500">
-                  ${material.pricePerUnit} per {material.unit}
+                  ₹{material.pricePerUnit} per {material.unit}
                 </div>
               </div>
               <div className="flex items-center gap-2">
