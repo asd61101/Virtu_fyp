@@ -1,6 +1,7 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, PieChart } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface CostBreakdownProps {
   totalCost: number;
@@ -9,11 +10,25 @@ interface CostBreakdownProps {
 
 const CostBreakdown = ({ totalCost, budget }: CostBreakdownProps) => {
   const isOverBudget = budget > 0 && totalCost > budget;
+  const [showDetailedBreakdown, setShowDetailedBreakdown] = useState(false);
+  
+  // Estimated breakdown percentages (these would be calculated from actual selections in a real app)
+  const breakdownEstimates = {
+    structural: { percentage: 30, label: 'Structural Materials' },
+    flooring: { percentage: 15, label: 'Flooring' },
+    wall: { percentage: 10, label: 'Wall Finishes' },
+    electrical: { percentage: 12, label: 'Electrical' },
+    kitchen: { percentage: 18, label: 'Kitchen' },
+    bathroom: { percentage: 15, label: 'Bathroom' },
+  };
   
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Cost Breakdown</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <PieChart className="h-5 w-5" />
+          Cost Breakdown
+        </CardTitle>
         <CardDescription>Overview of your project costs</CardDescription>
       </CardHeader>
       <CardContent>
@@ -36,10 +51,53 @@ const CostBreakdown = ({ totalCost, budget }: CostBreakdownProps) => {
               <span>Warning: Cost exceeds budget by ₹{(totalCost - budget).toFixed(2)}</span>
             </div>
           )}
+          
+          <button 
+            onClick={() => setShowDetailedBreakdown(!showDetailedBreakdown)}
+            className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+          >
+            {showDetailedBreakdown ? 'Hide' : 'Show'} Detailed Breakdown
+          </button>
+          
+          {showDetailedBreakdown && totalCost > 0 && (
+            <div className="space-y-3 pt-2 border-t">
+              <p className="text-sm text-gray-500">Estimated Cost Breakdown:</p>
+              
+              {Object.entries(breakdownEstimates).map(([key, { percentage, label }]) => {
+                const estimatedCost = (totalCost * percentage) / 100;
+                return (
+                  <div key={key} className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-3 h-3 rounded-full bg-${getColorForCategory(key)}-500`}></div>
+                      <span className="text-sm">{label}:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">₹{estimatedCost.toFixed(2)}</span>
+                      <span className="text-xs text-gray-500">({percentage}%)</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
   );
 };
+
+// Helper function to assign colors to different categories
+function getColorForCategory(category: string): string {
+  const colorMap: Record<string, string> = {
+    structural: 'blue',
+    flooring: 'green',
+    wall: 'yellow',
+    electrical: 'purple',
+    kitchen: 'orange',
+    bathroom: 'pink',
+  };
+  
+  return colorMap[category] || 'gray';
+}
 
 export default CostBreakdown;
