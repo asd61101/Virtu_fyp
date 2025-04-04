@@ -320,7 +320,7 @@ const Dashboard = () => {
                     <p className="text-sm text-gray-600">Generate a plan from defined constraints</p>
                   </Link>
                   
-                  <Link to="#" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                  <Link to="/edit-plan" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
                     <div className="flex items-center mb-4">
                       <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
                         <PenLine className="h-6 w-6" />
