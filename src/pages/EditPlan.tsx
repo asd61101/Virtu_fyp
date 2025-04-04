@@ -1,13 +1,29 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Upload, Save, Download, Undo, Redo, Grid, Move, Square, Circle, PanelLeft, X } from "lucide-react";
+import { 
+  ArrowLeft, Upload, Save, Download, Undo, Redo, 
+  Move, Square, Circle, PanelLeft, X, ZoomIn, ZoomOut, 
+  Grid as GridIcon, Maximize, Trash2, Copy, Rotate3d, Layers, Eye
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
 
 const EditPlan = () => {
   const navigate = useNavigate();
@@ -22,20 +38,65 @@ const EditPlan = () => {
   const [history, setHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [activeTool, setActiveTool] = useState<"select" | "wall" | "door" | "window" | "room">("select");
+  const [zoom, setZoom] = useState<number>(100);
+  const [isExpanded, setIsExpanded] = useState<Record<string, boolean>>({
+    "Rooms": true,
+    "Doors & Windows": false,
+    "Furniture": false
+  });
   
   const tools = [
-    { id: "select", name: "Select", icon: Move },
-    { id: "wall", name: "Wall", icon: Square },
-    { id: "door", name: "Door", icon: Circle },
-    { id: "window", name: "Window", icon: Circle },
-    { id: "room", name: "Room", icon: Square },
+    { id: "select", name: "Select", icon: Move, description: "Select and move objects" },
+    { id: "wall", name: "Wall", icon: Square, description: "Draw walls" },
+    { id: "door", name: "Door", icon: Circle, description: "Add doors" },
+    { id: "window", name: "Window", icon: Circle, description: "Add windows" },
+    { id: "room", name: "Room", icon: Square, description: "Create a room" },
   ];
 
   const elements = [
-    { category: "Rooms", items: ["Living Room", "Bedroom", "Kitchen", "Bathroom", "Dining Room"] },
-    { category: "Doors & Windows", items: ["Single Door", "Double Door", "Sliding Door", "Window", "French Window"] },
-    { category: "Furniture", items: ["Sofa", "Bed", "Table", "Chair", "Cabinet"] },
+    { 
+      category: "Rooms", 
+      items: [
+        { name: "Living Room", description: "Open space for relaxation and entertainment" },
+        { name: "Bedroom", description: "Private space for sleeping and relaxation" }, 
+        { name: "Kitchen", description: "Space for cooking and food preparation" }, 
+        { name: "Bathroom", description: "Sanitary facilities and personal hygiene" }, 
+        { name: "Dining Room", description: "Dedicated area for meals" }
+      ] 
+    },
+    { 
+      category: "Doors & Windows", 
+      items: [
+        { name: "Single Door", description: "Standard entry point" }, 
+        { name: "Double Door", description: "Wide entry point for larger spaces" }, 
+        { name: "Sliding Door", description: "Space-saving door that slides open" }, 
+        { name: "Window", description: "Standard window for light and ventilation" }, 
+        { name: "French Window", description: "Floor-to-ceiling window design" }
+      ] 
+    },
+    { 
+      category: "Furniture", 
+      items: [
+        { name: "Sofa", description: "Comfortable seating for living areas" }, 
+        { name: "Bed", description: "Sleeping furniture for bedrooms" }, 
+        { name: "Table", description: "Surface for various activities" }, 
+        { name: "Chair", description: "Seating furniture" }, 
+        { name: "Cabinet", description: "Storage furniture with doors or drawers" }
+      ] 
+    },
   ];
+
+  const handleZoomIn = () => {
+    if (zoom < 200) {
+      setZoom(prev => prev + 10);
+    }
+  };
+
+  const handleZoomOut = () => {
+    if (zoom > 50) {
+      setZoom(prev => prev - 10);
+    }
+  };
 
   const handleUpload = () => {
     if (fileInputRef.current) {
@@ -126,6 +187,13 @@ const EditPlan = () => {
     }, 1500);
   };
 
+  const toggleCategory = (category: string) => {
+    setIsExpanded(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
+
   useEffect(() => {
     // Initialize canvas
     if (canvasRef.current) {
@@ -161,7 +229,7 @@ const EditPlan = () => {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 py-4 px-6 flex items-center justify-between">
+      <header className="bg-white border-b border-gray-200 py-3 px-6 flex items-center justify-between shadow-sm">
         <div className="flex items-center">
           <Button 
             variant="ghost" 
@@ -172,9 +240,12 @@ const EditPlan = () => {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Dashboard
           </Button>
-          <h1 className="text-xl font-semibold">
-            {planId ? "Edit Floor Plan" : "New Floor Plan"}
-          </h1>
+          <div>
+            <h1 className="text-xl font-semibold text-virtuspace-700">
+              {planId ? "Edit Floor Plan" : "New Floor Plan"}
+            </h1>
+            <p className="text-sm text-gray-500">Design your space with precision</p>
+          </div>
         </div>
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-2">
@@ -183,6 +254,7 @@ const EditPlan = () => {
               size="sm" 
               onClick={handleUndo}
               disabled={historyIndex <= 0}
+              className="border-gray-200 text-gray-700"
             >
               <Undo className="h-4 w-4 mr-1" />
               Undo
@@ -192,6 +264,7 @@ const EditPlan = () => {
               size="sm" 
               onClick={handleRedo}
               disabled={historyIndex >= history.length - 1}
+              className="border-gray-200 text-gray-700"
             >
               <Redo className="h-4 w-4 mr-1" />
               Redo
@@ -201,6 +274,7 @@ const EditPlan = () => {
             variant="outline" 
             size="sm" 
             onClick={handleSave}
+            className="border-gray-200 text-gray-700"
           >
             <Save className="h-4 w-4 mr-1" />
             Save
@@ -209,6 +283,7 @@ const EditPlan = () => {
             variant="outline" 
             size="sm" 
             onClick={handleExport}
+            className="border-gray-200 text-gray-700"
           >
             <Download className="h-4 w-4 mr-1" />
             Export
@@ -216,7 +291,7 @@ const EditPlan = () => {
           {canUpload && (
             <Button 
               size="sm" 
-              className="bg-blue-500 hover:bg-blue-600"
+              className="bg-virtuspace-500 hover:bg-virtuspace-600"
               onClick={handleUpload}
             >
               <Upload className="h-4 w-4 mr-1" />
@@ -233,13 +308,62 @@ const EditPlan = () => {
         </div>
       </header>
 
+      {/* Toolbar */}
+      <div className="bg-white border-b border-gray-200 px-4 py-2 flex items-center justify-between shadow-sm">
+        <div className="flex items-center space-x-1">
+          {tools.map((tool) => (
+            <Button
+              key={tool.id}
+              variant={activeTool === tool.id ? "default" : "outline"}
+              size="sm"
+              className={cn(
+                "h-9 gap-1", 
+                activeTool === tool.id ? 'bg-virtuspace-500 hover:bg-virtuspace-600 text-white' : 'border-gray-200'
+              )}
+              onClick={() => setActiveTool(tool.id as any)}
+              title={tool.description}
+            >
+              <tool.icon className="h-4 w-4" />
+              <span>{tool.name}</span>
+            </Button>
+          ))}
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="h-8 w-8 border-gray-200"
+            onClick={handleZoomOut}
+          >
+            <ZoomOut className="h-4 w-4" />
+          </Button>
+          <span className="text-sm font-medium text-gray-700">{zoom}%</span>
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="h-8 w-8 border-gray-200"
+            onClick={handleZoomIn}
+          >
+            <ZoomIn className="h-4 w-4" />
+          </Button>
+          <Button 
+            variant="outline" 
+            size="icon" 
+            className="h-8 w-8 border-gray-200"
+          >
+            <Maximize className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         {showSidebar && (
           <div className="w-72 bg-white border-r border-gray-200 flex flex-col">
-            <div className="flex items-center justify-between border-b border-gray-200 p-4">
-              <h2 className="font-medium">Editor Tools</h2>
+            <div className="flex items-center justify-between border-b border-gray-200 p-3">
+              <h2 className="font-medium text-virtuspace-700">Editor Tools</h2>
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -250,72 +374,78 @@ const EditPlan = () => {
               </Button>
             </div>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-              <TabsList className="grid grid-cols-2 p-2">
-                <TabsTrigger value="elements">Elements</TabsTrigger>
-                <TabsTrigger value="settings">Settings</TabsTrigger>
+              <TabsList className="grid grid-cols-2 p-2 bg-gray-50">
+                <TabsTrigger value="elements" className="text-sm">Elements</TabsTrigger>
+                <TabsTrigger value="settings" className="text-sm">Settings</TabsTrigger>
               </TabsList>
-              <TabsContent value="elements" className="flex-1 overflow-y-auto p-4">
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="font-medium mb-3">Tools</h3>
-                    <div className="grid grid-cols-3 gap-2">
-                      {tools.map((tool) => (
-                        <Button
-                          key={tool.id}
-                          variant={activeTool === tool.id ? "default" : "outline"}
-                          className={`flex flex-col items-center justify-center h-20 ${activeTool === tool.id ? 'bg-blue-500 hover:bg-blue-600' : ''}`}
-                          onClick={() => setActiveTool(tool.id as any)}
-                        >
-                          <tool.icon className="h-6 w-6 mb-1" />
-                          <span className="text-xs">{tool.name}</span>
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                  
+              <TabsContent value="elements" className="flex-1 overflow-y-auto p-3 space-y-5">
+                <div className="space-y-4">
                   {elements.map((category) => (
-                    <div key={category.category}>
-                      <h3 className="font-medium mb-2">{category.category}</h3>
-                      <div className="space-y-2">
-                        {category.items.map((item) => (
-                          <button
-                            key={item}
-                            className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-sm"
-                            onClick={() => {
-                              toast({
-                                title: `Added ${item}`,
-                                description: `Drag to position the ${item.toLowerCase()} on your floor plan`,
-                              });
-                              addToHistory(`add-${item}`);
-                            }}
-                          >
-                            {item}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                    <Collapsible 
+                      key={category.category} 
+                      open={isExpanded[category.category]} 
+                      onOpenChange={() => toggleCategory(category.category)}
+                      className="border border-gray-100 rounded-md overflow-hidden"
+                    >
+                      <CollapsibleTrigger asChild>
+                        <div className="flex justify-between items-center p-3 bg-gray-50 cursor-pointer hover:bg-gray-100">
+                          <h3 className="font-medium text-sm text-virtuspace-700">{category.category}</h3>
+                          <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                            <ChevronIcon isOpen={isExpanded[category.category]} />
+                          </Button>
+                        </div>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="bg-white">
+                        <div className="p-1">
+                          {category.items.map((item) => (
+                            <button
+                              key={item.name}
+                              className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-50 flex items-center text-sm group"
+                              onClick={() => {
+                                toast({
+                                  title: `Added ${item.name}`,
+                                  description: `Drag to position the ${item.name.toLowerCase()} on your floor plan`,
+                                });
+                                addToHistory(`add-${item.name}`);
+                              }}
+                            >
+                              <div className="mr-2 h-6 w-6 bg-gray-100 rounded-md flex items-center justify-center">
+                                <div className="h-3 w-3 bg-virtuspace-300 rounded-sm"></div>
+                              </div>
+                              <div>
+                                <div className="font-medium text-gray-800">{item.name}</div>
+                                <div className="text-xs text-gray-500 hidden group-hover:block">{item.description}</div>
+                              </div>
+                              <div className="ml-auto opacity-0 group-hover:opacity-100">
+                                <Copy className="h-3.5 w-3.5 text-gray-400" />
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
                   ))}
                 </div>
               </TabsContent>
               <TabsContent value="settings" className="flex-1 overflow-y-auto p-4">
                 <div className="space-y-6">
-                  <div>
-                    <h3 className="font-medium mb-3">Grid Settings</h3>
+                  <div className="bg-white p-4 rounded-lg border border-gray-100">
+                    <h3 className="font-medium mb-3 text-virtuspace-700 text-sm">Grid Settings</h3>
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label htmlFor="snap-grid">Snap to Grid</Label>
+                        <Label htmlFor="snap-grid" className="text-sm">Snap to Grid</Label>
                         <input
                           id="snap-grid"
                           type="checkbox"
                           checked={snapToGrid}
                           onChange={(e) => setSnapToGrid(e.target.checked)}
-                          className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          className="h-4 w-4 rounded border-gray-300 text-virtuspace-600 focus:ring-virtuspace-500"
                         />
                       </div>
                       <div className="space-y-2">
                         <div className="flex justify-between">
-                          <Label htmlFor="grid-size">Grid Size</Label>
-                          <span className="text-sm text-gray-500">{gridSize}px</span>
+                          <Label htmlFor="grid-size" className="text-sm">Grid Size</Label>
+                          <span className="text-xs text-gray-500">{gridSize}px</span>
                         </div>
                         <Slider
                           id="grid-size"
@@ -325,25 +455,26 @@ const EditPlan = () => {
                           value={[gridSize]}
                           onValueChange={(value) => setGridSize(value[0])}
                           disabled={!snapToGrid}
+                          className="py-2"
                         />
                       </div>
                     </div>
                   </div>
                   
-                  <div>
-                    <h3 className="font-medium mb-3">Canvas Settings</h3>
+                  <div className="bg-white p-4 rounded-lg border border-gray-100">
+                    <h3 className="font-medium mb-3 text-virtuspace-700 text-sm">Canvas Settings</h3>
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="canvas-width">Canvas Width (px)</Label>
-                        <Input id="canvas-width" type="number" defaultValue="1200" />
+                        <Label htmlFor="canvas-width" className="text-sm">Canvas Width (px)</Label>
+                        <Input id="canvas-width" type="number" defaultValue="1200" className="h-9 text-sm" />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="canvas-height">Canvas Height (px)</Label>
-                        <Input id="canvas-height" type="number" defaultValue="800" />
+                        <Label htmlFor="canvas-height" className="text-sm">Canvas Height (px)</Label>
+                        <Input id="canvas-height" type="number" defaultValue="800" className="h-9 text-sm" />
                       </div>
                       <Button 
                         variant="outline" 
-                        className="w-full"
+                        className="w-full text-sm h-9 border-gray-200"
                         onClick={() => {
                           toast({
                             title: "Canvas resized",
@@ -355,6 +486,39 @@ const EditPlan = () => {
                       </Button>
                     </div>
                   </div>
+                  
+                  <div className="bg-white p-4 rounded-lg border border-gray-100">
+                    <h3 className="font-medium mb-3 text-virtuspace-700 text-sm">View Options</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="show-dimensions" className="text-sm">Show Dimensions</Label>
+                        <input
+                          id="show-dimensions"
+                          type="checkbox"
+                          defaultChecked={true}
+                          className="h-4 w-4 rounded border-gray-300 text-virtuspace-600 focus:ring-virtuspace-500"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="show-ruler" className="text-sm">Show Ruler</Label>
+                        <input
+                          id="show-ruler"
+                          type="checkbox"
+                          defaultChecked={true}
+                          className="h-4 w-4 rounded border-gray-300 text-virtuspace-600 focus:ring-virtuspace-500"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="show-guides" className="text-sm">Show Guides</Label>
+                        <input
+                          id="show-guides"
+                          type="checkbox"
+                          defaultChecked={false}
+                          className="h-4 w-4 rounded border-gray-300 text-virtuspace-600 focus:ring-virtuspace-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </TabsContent>
             </Tabs>
@@ -362,12 +526,15 @@ const EditPlan = () => {
         )}
 
         {/* Canvas Area */}
-        <div className="flex-1 relative overflow-auto p-4 bg-gray-100">
+        <div className="flex-1 relative overflow-auto bg-gray-100" style={{ 
+          backgroundImage: 'linear-gradient(to right, rgba(243, 244, 246, 1) 1px, transparent 1px), linear-gradient(to bottom, rgba(243, 244, 246, 1) 1px, transparent 1px)',
+          backgroundSize: '20px 20px'
+        }}>
           {!showSidebar && (
             <Button
               variant="outline"
               size="sm"
-              className="absolute top-4 left-4 z-10 bg-white"
+              className="absolute top-4 left-4 z-10 bg-white shadow-sm"
               onClick={() => setShowSidebar(true)}
             >
               <PanelLeft className="h-4 w-4 mr-1" />
@@ -375,33 +542,76 @@ const EditPlan = () => {
             </Button>
           )}
           
-          <div className="flex items-center justify-center h-full">
+          <div className="flex items-center justify-center h-full p-8">
             {canUpload ? (
-              <div className="text-center p-8 bg-white rounded-lg border-2 border-dashed border-gray-300 max-w-md">
-                <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-2 text-sm font-medium text-gray-900">Upload a Floor Plan</h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Upload a JPG, PNG, or PDF file to start editing
+              <div className="text-center p-8 bg-white rounded-xl border-2 border-dashed border-gray-300 max-w-md shadow-sm hover:border-virtuspace-400 transition-colors">
+                <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-virtuspace-50 mb-4">
+                  <Upload className="h-8 w-8 text-virtuspace-500" />
+                </div>
+                <h3 className="text-lg font-medium text-virtuspace-700">Start Your Floor Plan</h3>
+                <p className="mt-2 text-sm text-gray-500 max-w-xs mx-auto">
+                  Upload a JPG, PNG, or PDF file to start editing, or create a new floor plan from scratch
                 </p>
-                <div className="mt-6">
-                  <Button onClick={handleUpload}>
+                <div className="mt-6 flex flex-col space-y-3">
+                  <Button onClick={handleUpload} className="bg-virtuspace-500 hover:bg-virtuspace-600">
                     <Upload className="h-4 w-4 mr-2" />
-                    Upload Plan
+                    Upload Existing Plan
+                  </Button>
+                  <Button variant="outline" onClick={() => setCanUpload(false)} className="border-gray-200">
+                    <Square className="h-4 w-4 mr-2" />
+                    Create New Plan
                   </Button>
                 </div>
               </div>
             ) : (
-              <canvas 
-                ref={canvasRef} 
-                width={1200} 
-                height={800}
-                className="border border-gray-300 bg-white shadow-md"
-              />
+              <div className="relative bg-white rounded-md shadow-lg border border-gray-200 overflow-hidden">
+                <div className="absolute top-2 left-2 bg-white rounded-md shadow-sm border border-gray-200 p-1 flex space-x-1">
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <Layers className="h-4 w-4 text-gray-600" />
+                  </Button>
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <Eye className="h-4 w-4 text-gray-600" />
+                  </Button>
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <Rotate3d className="h-4 w-4 text-gray-600" />
+                  </Button>
+                </div>
+                <canvas 
+                  ref={canvasRef} 
+                  width={1200} 
+                  height={800}
+                  className="border border-gray-200 bg-white"
+                  style={{ 
+                    transform: `scale(${zoom / 100})`,
+                    transformOrigin: 'center center'
+                  }}
+                />
+              </div>
             )}
           </div>
         </div>
       </div>
     </div>
+  );
+};
+
+// Chevron icon that rotates based on expanded state
+const ChevronIcon = ({ isOpen }: { isOpen: boolean }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
   );
 };
 
