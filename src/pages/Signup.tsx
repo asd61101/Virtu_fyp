@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -6,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { api } from "@/services/api";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -65,11 +65,7 @@ const Signup = () => {
     setIsLoading(true);
     
     try {
-      // Simulate signup API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock successful signup
-      localStorage.setItem("isLoggedIn", "true");
+      await api.signup(name, email, password);
       
       toast({
         title: "Account created successfully",
@@ -80,7 +76,7 @@ const Signup = () => {
     } catch (error) {
       toast({
         title: "Signup failed",
-        description: "Please try again later",
+        description: error instanceof Error ? error.message : "Please try again later",
         variant: "destructive",
       });
     } finally {
@@ -91,18 +87,14 @@ const Signup = () => {
   const handleGoogleSignup = () => {
     setIsLoading(true);
     
-    // Simulate Google signup
-    setTimeout(() => {
-      localStorage.setItem("isLoggedIn", "true");
-      
-      toast({
-        title: "Account created successfully",
-        description: "Welcome to Virtuspace Architecture",
-      });
-      
-      navigate("/dashboard");
-      setIsLoading(false);
-    }, 1500);
+    // TODO: Implement Google OAuth
+    toast({
+      title: "Google signup not implemented",
+      description: "This feature is coming soon",
+      variant: "destructive",
+    });
+    
+    setIsLoading(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -248,7 +240,7 @@ const Signup = () => {
               className="w-full bg-virtuspace-500 hover:bg-virtuspace-600"
               disabled={isLoading}
             >
-              {isLoading ? "Creating account..." : "Create Account"}
+              {isLoading ? "Creating account..." : "Create account"}
             </Button>
           </form>
 
@@ -298,7 +290,7 @@ const Signup = () => {
           <p className="mt-6 text-center text-sm text-gray-600">
             Already have an account?{" "}
             <Link to="/login" className="font-medium text-virtuspace-500 hover:text-virtuspace-600">
-              Log in instead
+              Sign in
             </Link>
           </p>
         </div>

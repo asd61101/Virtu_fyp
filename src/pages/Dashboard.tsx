@@ -309,47 +309,65 @@ const Dashboard = () => {
                 </div>
                 
                 {/* Feature cards */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-                  <Link to="/ai-floorplanning" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
-                        <Plus className="h-6 w-6" />
-                      </div>
-                      <h3 className="text-lg font-medium text-gray-900">AI Floorplanning</h3>
-                    </div>
-                    <p className="text-sm text-gray-600">Generate a plan from defined constraints</p>
-                  </Link>
-                  
-                  <Link to="/edit-plan" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
-                        <PenLine className="h-6 w-6" />
-                      </div>
-                      <h3 className="text-lg font-medium text-gray-900">Edit plan</h3>
-                    </div>
-                    <p className="text-sm text-gray-600">Upload and edit an existing plan</p>
-                  </Link>
-                  
-                  <Link to="#" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
-                        <Layout className="h-6 w-6" />
-                      </div>
-                      <h3 className="text-lg font-medium text-gray-900">Render</h3>
-                    </div>
-                    <p className="text-sm text-gray-600">Upload a sketch or an image and turn it into a rendering</p>
-                  </Link>
-                  
-                  <Link to="/360-walkthrough" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
-                        <ImageIcon className="h-6 w-6" />
-                      </div>
-                      <h3 className="text-lg font-medium text-gray-900">360° Walkthrough</h3>
-                    </div>
-                    <p className="text-sm text-gray-600">Explore interior/exterior design styles</p>
-                  </Link>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+              <Link to="/ai-floorplanning" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
+                    <Plus className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">AI Floorplanning</h3>
                 </div>
+                <p className="text-sm text-gray-600">Generate a plan from defined constraints</p>
+              </Link>
+              <Link to="/material-selection" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
+                    <Plus className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">Metrial Selection </h3>
+                </div>
+                <p className="text-sm text-gray-600">select your metrial by your own</p>
+              </Link>
+
+              
+              <Link to="/edit-plan" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
+                    <PenLine className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">Edit plan</h3>
+                </div>
+                <p className="text-sm text-gray-600">Upload and edit an existing plan</p>
+              </Link>
+              
+              <Link to="#" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
+                    <Layout className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">Render</h3>
+                </div>
+                <p className="text-sm text-gray-600">Upload a sketch or an image and turn it into a rendering</p>
+              </Link>
+              <Link to="/cost-estimation" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
+                    <Layout className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">Cost Estimation </h3>
+                </div>
+                <p className="text-sm text-gray-600">Upload a sketch or an image and turn it into a rendering</p>
+              </Link>
+              <Link to="/360-walkthrough" className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-500 mr-4">
+                    <ImageIcon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900">360° Walkthrough</h3>
+                </div>
+                <p className="text-sm text-gray-600">Explore interior/exterior design styles</p>
+              </Link>
+            </div>
                 
                 {/* Projects section */}
                 <div className="mb-6">

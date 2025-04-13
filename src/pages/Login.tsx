@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
@@ -6,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { api } from "@/services/api";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -42,11 +42,7 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      // Simulate login API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Mock successful login
-      localStorage.setItem("isLoggedIn", "true");
+      await api.login(email, password);
       
       toast({
         title: "Login successful",
@@ -57,7 +53,7 @@ const Login = () => {
     } catch (error) {
       toast({
         title: "Login failed",
-        description: "Please check your credentials and try again",
+        description: error instanceof Error ? error.message : "Please check your credentials and try again",
         variant: "destructive",
       });
     } finally {
@@ -68,18 +64,14 @@ const Login = () => {
   const handleGoogleLogin = () => {
     setIsLoading(true);
     
-    // Simulate Google login
-    setTimeout(() => {
-      localStorage.setItem("isLoggedIn", "true");
-      
-      toast({
-        title: "Login successful",
-        description: "Welcome back to Virtuspace Architecture",
-      });
-      
-      navigate("/dashboard");
-      setIsLoading(false);
-    }, 1500);
+    // TODO: Implement Google OAuth
+    toast({
+      title: "Google login not implemented",
+      description: "This feature is coming soon",
+      variant: "destructive",
+    });
+    
+    setIsLoading(false);
   };
 
   const togglePasswordVisibility = () => {
